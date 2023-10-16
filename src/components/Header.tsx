@@ -18,12 +18,17 @@ const Header = () => {
       return <button onClick={handleLogout}>logout</button>;
     }
 
-    return <Link to="/signin">Sign in</Link>;
+    return (
+      <>
+        <Link to="/signin">Sign in</Link>
+        <Link to="/join">Sign up</Link>
+      </>
+    );
   };
   return (
     <header className="flex justify-between w-full py-4 border-b">
       <div>board</div>
-      <div className="flex">{renderSignin()}</div>
+      <div className="flex gap-x-3">{renderSignin()}</div>
     </header>
   );
 };
