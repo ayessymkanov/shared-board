@@ -27,7 +27,7 @@ const Header = () => {
   };
   return (
     <header className="flex justify-between w-full py-4 border-b">
-      <div>board</div>
+      <Link to="/">BOARD</Link>
       <div className="flex gap-x-3">{renderSignin()}</div>
     </header>
   );

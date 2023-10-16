@@ -9,9 +9,8 @@ function App() {
   return (
     <Layout>
       <Routes>
-        <Route index element={<div>home</div>} />
         <Route element={<ProtectedRoute />}>
-          <Route path="/board" element={<Home />} />
+          <Route path="/" element={<Home />} />
         </Route>
         <Route path="/signin" element={<Signin />} />
         <Route path="/join" element={<Signup />} />
