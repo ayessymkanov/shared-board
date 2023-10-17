@@ -28,18 +28,6 @@ const validationMap: Record<string, (value: string) => string> = {
   }
 }
 
-export function getValues(form: HTMLElement): Record<string, string> {
-  const values: Record<string, string> = {};
-  for (const child of form.children) {
-    const el = child as HTMLInputElement;
-    if (el.name) {
-      values[el.name] = el.value;
-    }
-  }
-
-  return values;
-}
-
 export function validate(values: Record<string, string>): Record<string, string> {
   const errors: Record<string, string> = {};
   for (const [key, value] of Object.entries(values)) {

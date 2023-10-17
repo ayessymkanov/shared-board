@@ -1,21 +1,13 @@
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
 
 const Header = () => {
-  const { isAuthenticated, setIsAuthenticated = () => {} } =
-    useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.clear();
-    setIsAuthenticated(false);
-    navigate("/signin");
-  };
+  const { isAuthenticated, user } = useContext(AuthContext);
 
   const renderSignin = () => {
     if (isAuthenticated) {
-      return <button onClick={handleLogout}>logout</button>;
+      return <span>Hello {user?.name}!</span>;
     }
 
     return (
@@ -26,7 +18,7 @@ const Header = () => {
     );
   };
   return (
-    <header className="flex justify-between w-full py-4 border-b">
+    <header className="flex justify-between items-center w-full h-12 border-b">
       <Link to="/">BOARD</Link>
       <div className="flex gap-x-3">{renderSignin()}</div>
     </header>
