@@ -1,6 +1,7 @@
 import { createContext, FC, ReactNode, useEffect, useState } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, NetworkStatus } from "@apollo/client";
 import type { ApolloQueryResult } from "@apollo/client";
+import LoadingOverlay from "./LoadingOverlay";
 
 type MeType = {
   email: string;
@@ -32,20 +33,35 @@ const ME = gql`
 export const AuthContext = createContext<AuthContextType>({});
 
 const AuthProvider: FC<Props> = ({ children }) => {
-  const { data, error, refetch } = useQuery(ME);
-  const [isAuthenticated, setIsAuthenticated] = useState(!error && data);
+  const { data, refetch, networkStatus, error, loading } = useQuery(ME, {
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: "no-cache",
+  });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(undefined);
 
   useEffect(() => {
-    setIsAuthenticated(!error && data);
-    setUser(data?.me);
-  }, [error, data]);
+    if (networkStatus === NetworkStatus.ready) {
+      setIsAuthenticated(Boolean(data));
+      setUser(data?.me);
+    } else if (error) {
+      setIsAuthenticated(false);
+    }
+  }, [networkStatus, data, error, loading]);
+
+  const renderChildren = () => {
+    if (networkStatus === NetworkStatus.loading) {
+      return <LoadingOverlay />;
+    }
+
+    return children;
+  }
 
   return (
     <AuthContext.Provider
       value={{ isAuthenticated, user, setIsAuthenticated, refetchMe: refetch }}
     >
-      {children}
+      {renderChildren()}
     </AuthContext.Provider>
   );
 };

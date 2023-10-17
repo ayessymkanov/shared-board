@@ -21,7 +21,7 @@ const TEAMS = gql`
 const Sidebar = () => {
   const { data } = useQuery(TEAMS);
   const [teamsHidden, setTeamsHidden] = useState(false);
-  const { setIsAuthenticated = () => {} } = useContext(AuthContext);
+  const { setIsAuthenticated = () => { } } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -56,7 +56,7 @@ const Sidebar = () => {
     "flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700";
   return (
     <aside className="w-64 h-[calc(100vh_-_4rem)] transition-transform -translate-x-full sm:translate-x-0">
-      <div className="flex w-full h-full px-3 py-4 overflow-y-auto border-r">
+      <div className="flex w-full h-full px-1 py-4 overflow-y-auto border-r">
         <ul className="space-y-2 font-medium w-full">
           <li>
             <Link to="/" replace className={itemClassName}>

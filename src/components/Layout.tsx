@@ -27,10 +27,10 @@ const Layout: FC<Props> = ({ children }) => {
   return (
     <main className="container mx-auto">
       <Header />
-      <div className="flex items-baseline">
+      <section className="flex items-baseline">
         {renderSidebar()}
         <div className={childrenClassName}>{children}</div>
-      </div>
+      </section>
     </main>
   );
 };
