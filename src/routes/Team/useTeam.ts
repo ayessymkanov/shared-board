@@ -1,7 +1,9 @@
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import { gql } from "../../__generated__/gql";
+import { Card, TeamQuery, User } from "../../__generated__/graphql";
 
-const TEAM = gql`
-  query team($id: Int!) {
+const TEAM = gql(`
+  query Team($id: Int!) {
     team(id: $id) {
       name
       id
@@ -10,8 +12,14 @@ const TEAM = gql`
         title
         id
         assigneeId
+        createdAt
+        teamId 
+        status
+        dueDateTime
         assignee {
           name
+          email 
+          id
         }
       }
       teamMembers {
@@ -21,48 +29,36 @@ const TEAM = gql`
       }
     }
   }
-`;
+`);
 
-type Card = {
-  title: string;
-  assigneeId: number;
-  id: string;
+type Processed = Record<string, User & { cards: Array<Card> }>;
+type TeamData = TeamQuery["team"] & {
+  columns: Processed;
 }
 
-type MemberWithCard = {
-  name: string;
-  email: string;
-  id: number;
-  cards: Array<Card>;
-}
-
-type Processed = Record<number, MemberWithCard>;
-
-const processData = (data: any): Processed => {
-  const processed = {};
-
-  for (const member of data.teamMembers) {
-    processed[member.id] = {
-      ...member,
-      cards: data.cards.filter((card) => card.assigneeId === Number(member.id)),
-    }
-  }
-
-  return processed;
-}
 const useTeam = (id: number) => {
   const { data, loading, error } = useQuery(TEAM, {
     variables: { id },
   });
-  let teamData = {};
+  let teamData: TeamData = {} as TeamData;
+
 
   if (data) {
+    const processed: Processed = {};
+
+    for (const member of data?.team?.teamMembers ?? []) {
+      const cards = data?.team?.cards.filter((card) => card && (card.assigneeId === Number(member.id))) || [];
+      processed[member.id] = {
+        ...member,
+        cards,
+      }
+    }
+
     teamData = {
       ...data.team,
-      columns: processData(data.team),
-    };
+      columns: processed,
+    } as TeamData;
   }
-
 
   return {
     teamData,

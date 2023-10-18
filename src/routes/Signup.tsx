@@ -1,16 +1,17 @@
 import { useContext, useState, FormEvent } from "react";
-import { useMutation, gql } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "../components/AuthProvider";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { validate } from "../utils/validation";
+import { gql } from "../__generated__/gql";
 
-const SIGNUP = gql`
+const SIGNUP = gql(`
   mutation Signup($input: SignupInput) {
     signup(input: $input)
   }
-`;
+`);
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const {
-    setIsAuthenticated = () => {},
+    setIsAuthenticated = () => { },
     refetchMe,
     isAuthenticated,
   } = useContext(AuthContext);
@@ -45,7 +46,7 @@ const Signup = () => {
           },
         },
       });
-      localStorage.setItem("token", s.data.signup);
+      localStorage.setItem("token", s.data?.signup ?? "");
       if (refetchMe) {
         const { data } = await refetchMe();
         const isAuthenticated = !!data?.me?.email;

@@ -1,24 +1,25 @@
 import { FormEvent, useContext, useState } from "react";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "../components/AuthProvider";
 import { validate } from "../utils/validation";
 import Input from "../components/Input";
 import Link from "../components/Link";
 import Button from "../components/Button";
+import { gql } from "../__generated__/gql";
 
-const LOGIN = gql`
+const LOGIN = gql(`
   mutation Login($input: LoginInput) {
     login(input: $input)
   }
-`;
+`);
 
 const Signin = () => {
   const [login, { loading, error }] = useMutation(LOGIN);
   const {
     refetchMe,
     isAuthenticated,
-    setIsAuthenticated = () => {},
+    setIsAuthenticated = () => { },
   } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,7 +39,7 @@ const Signin = () => {
       const loginData = await login({
         variables: { input: { email, password } },
       });
-      localStorage.setItem("token", loginData.data.login);
+      localStorage.setItem("token", loginData.data?.login ?? "");
       if (refetchMe) {
         const { data } = await refetchMe();
         const isAuthenticated = !!data?.me?.email;

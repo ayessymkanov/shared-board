@@ -1,34 +1,30 @@
 import { createContext, FC, ReactNode, useEffect, useState } from "react";
-import { gql, useQuery, NetworkStatus } from "@apollo/client";
+import { useQuery, NetworkStatus } from "@apollo/client";
 import type { ApolloQueryResult } from "@apollo/client";
 import LoadingOverlay from "./LoadingOverlay";
-
-type MeType = {
-  email: string;
-  name: string;
-  id: number;
-};
+import { gql } from "../__generated__/gql";
+import { User } from "../__generated__/graphql";
 
 type AuthContextType = {
   isAuthenticated?: boolean;
-  user?: MeType;
+  user?: User;
   setIsAuthenticated?: (isLoggedIn: boolean) => void;
-  refetchMe?: () => Promise<ApolloQueryResult<{ me?: MeType }>>;
+  refetchMe?: () => Promise<ApolloQueryResult<{ me?: User }>>;
 };
 
 type Props = {
   children: ReactNode;
 };
 
-const ME = gql`
-  query {
+const ME = gql(`
+  query Me{
     me {
       name
       email
       id
     }
   }
-`;
+`);
 
 export const AuthContext = createContext<AuthContextType>({});
 
@@ -38,7 +34,7 @@ const AuthProvider: FC<Props> = ({ children }) => {
     fetchPolicy: "no-cache",
   });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(undefined);
+  const [user, setUser] = useState<User | undefined>(undefined);
 
   useEffect(() => {
     if (networkStatus === NetworkStatus.ready) {
