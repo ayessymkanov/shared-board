@@ -26,9 +26,9 @@ const Layout: FC<Props> = ({ children }) => {
     "pl-4": shouldRenderSidebar,
   });
   return (
-    <main className="container mx-auto relative">
+    <main className="mx-auto relative">
       <Header />
-      <section className="flex items-baseline">
+      <section className="flex items-baseline container mx-auto">
         {renderSidebar()}
         <div className={childrenClassName}>{children}</div>
       </section>

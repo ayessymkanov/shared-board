@@ -21,13 +21,15 @@ const Header = () => {
     );
   };
   return (
-    <header className="flex justify-between items-center w-full h-12 border-b">
-      <Link to="/">BOARD</Link>
-      <div className="flex gap-x-3 items-center">
-        <Button onClick={open}>Add Card</Button>
-        {renderSignin()}
+    <nav className="w-full h-12 border-b">
+      <div className="flex justify-between items-center h-full container mx-auto">
+        <Link to="/">BOARD</Link>
+        <div className="flex gap-x-3 items-center">
+          <Button onClick={open} type="outlined" size="xs">+ Add Card</Button>
+          {renderSignin()}
+        </div>
       </div>
-    </header>
+    </nav>
   );
 };
 

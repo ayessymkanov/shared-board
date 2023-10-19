@@ -1,0 +1,32 @@
+.x-button {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.x-button::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: gray;
+  transform: rotateZ(45deg);
+  transform-origin: left;
+}
+
+.x-button::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  right: 0;
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: gray;
+  transform: rotateZ(-45deg);
+  transform-origin: right;
+}
