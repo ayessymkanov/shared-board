@@ -29,7 +29,7 @@ const ME = gql(`
 export const AuthContext = createContext<AuthContextType>({});
 
 const AuthProvider: FC<Props> = ({ children }) => {
-  const { data, refetch, networkStatus, error, loading } = useQuery(ME, {
+  const { data, refetch, networkStatus, error } = useQuery(ME, {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "no-cache",
   });
@@ -43,14 +43,19 @@ const AuthProvider: FC<Props> = ({ children }) => {
     } else if (error) {
       setIsAuthenticated(false);
     }
-  }, [networkStatus, data, error, loading]);
+  }, [networkStatus, data, error]);
 
   const renderChildren = () => {
     if (networkStatus === NetworkStatus.loading) {
       return <LoadingOverlay />;
     }
 
-    return children;
+    if (
+      (networkStatus === NetworkStatus.error && error && !isAuthenticated) ||
+      (networkStatus === NetworkStatus.ready && data && isAuthenticated)
+    ) {
+      return children;
+    }
   }
 
   return (

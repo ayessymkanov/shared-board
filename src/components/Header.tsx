@@ -10,7 +10,12 @@ const Header = () => {
 
   const renderSignin = () => {
     if (isAuthenticated) {
-      return <span>Hello {user?.name}!</span>;
+      return (
+        <>
+          <Button onClick={open} type="outlined" size="xs">+ Add Card</Button>
+          <span>Hello {user?.name}!</span>
+        </>
+      );
     }
 
     return (
@@ -25,7 +30,6 @@ const Header = () => {
       <div className="flex justify-between items-center h-full container mx-auto">
         <Link to="/">BOARD</Link>
         <div className="flex gap-x-3 items-center">
-          <Button onClick={open} type="outlined" size="xs">+ Add Card</Button>
           {renderSignin()}
         </div>
       </div>

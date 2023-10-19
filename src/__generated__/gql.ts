@@ -18,6 +18,7 @@ const documents = {
     "\n  mutation Login($input: LoginInput) {\n    login(input: $input)\n  }\n": types.LoginDocument,
     "\n  mutation Signup($input: SignupInput) {\n    signup(input: $input)\n  }\n": types.SignupDocument,
     "\n  query Team($id: Int!) {\n    team(id: $id) {\n      name\n      id\n      adminId\n      cards {\n        title\n        id\n        assigneeId\n        createdAt\n        teamId \n        status\n        dueDateTime\n        assignee {\n          name\n          email \n          id\n        }\n      }\n      teamMembers {\n        name\n        email\n        id\n      }\n    }\n  }\n": types.TeamDocument,
+    "\n  query Today {\n    today {\n      title\n      status\n      dueDateTime\n      createdAt\n      id\n    }\n  }\n": types.TodayDocument,
 };
 
 /**
@@ -54,6 +55,10 @@ export function gql(source: "\n  mutation Signup($input: SignupInput) {\n    sig
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query Team($id: Int!) {\n    team(id: $id) {\n      name\n      id\n      adminId\n      cards {\n        title\n        id\n        assigneeId\n        createdAt\n        teamId \n        status\n        dueDateTime\n        assignee {\n          name\n          email \n          id\n        }\n      }\n      teamMembers {\n        name\n        email\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  query Team($id: Int!) {\n    team(id: $id) {\n      name\n      id\n      adminId\n      cards {\n        title\n        id\n        assigneeId\n        createdAt\n        teamId \n        status\n        dueDateTime\n        assignee {\n          name\n          email \n          id\n        }\n      }\n      teamMembers {\n        name\n        email\n        id\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query Today {\n    today {\n      title\n      status\n      dueDateTime\n      createdAt\n      id\n    }\n  }\n"): (typeof documents)["\n  query Today {\n    today {\n      title\n      status\n      dueDateTime\n      createdAt\n      id\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

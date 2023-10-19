@@ -5,6 +5,7 @@ import Home from "./routes/Home";
 import Signup from "./routes/Signup";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Team from "./routes/Team";
+import Today from "./routes/Today";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Home />} />
+          <Route path="/today" element={<Today />} />
           <Route path="/team/:id" element={<Team />} />
         </Route>
         <Route path="/signin" element={<Signin />} />
