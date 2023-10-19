@@ -11,7 +11,7 @@ const Team = () => {
     return <div>Loading...</div>;
   }
 
-  const className = classnames(`grid grid-cols-4 gap-4`);
+  const className = classnames(`grid grid-cols-3 gap-4`);
 
   return (
     <div className={className}>

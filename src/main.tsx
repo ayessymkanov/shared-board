@@ -6,14 +6,17 @@ import client from "./apolloClient";
 import App from "./App.tsx";
 import "./index.css";
 import AuthProvider from "./components/AuthProvider";
+import DialogProvider from "./components/DialogProvider";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <AuthProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <DialogProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </DialogProvider>
       </AuthProvider>
     </ApolloProvider>
   </React.StrictMode>

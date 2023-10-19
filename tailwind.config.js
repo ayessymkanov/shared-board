@@ -5,7 +5,11 @@ export default {
     "./src/**/*.tsx"
   ],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        'backdrop': "20px 20px 20px 2000px rgba(0,0,0,0.5)",
+      }
+    },
   },
   plugins: [],
 }

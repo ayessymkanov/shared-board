@@ -1,9 +1,12 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
+import Button from "./Button";
+import { DialogContext } from "./DialogProvider";
 
 const Header = () => {
   const { isAuthenticated, user } = useContext(AuthContext);
+  const { open } = useContext(DialogContext);
 
   const renderSignin = () => {
     if (isAuthenticated) {
@@ -20,7 +23,10 @@ const Header = () => {
   return (
     <header className="flex justify-between items-center w-full h-12 border-b">
       <Link to="/">BOARD</Link>
-      <div className="flex gap-x-3">{renderSignin()}</div>
+      <div className="flex gap-x-3 items-center">
+        <Button onClick={open}>Add Card</Button>
+        {renderSignin()}
+      </div>
     </header>
   );
 };

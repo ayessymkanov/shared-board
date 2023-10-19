@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import classnames from "classnames";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+import Dialog from "./Dialog";
 
 type Props = {
   children: React.ReactNode;
@@ -25,12 +26,13 @@ const Layout: FC<Props> = ({ children }) => {
     "pl-4": shouldRenderSidebar,
   });
   return (
-    <main className="container mx-auto">
+    <main className="container mx-auto relative">
       <Header />
       <section className="flex items-baseline">
         {renderSidebar()}
         <div className={childrenClassName}>{children}</div>
       </section>
+      <Dialog />
     </main>
   );
 };
