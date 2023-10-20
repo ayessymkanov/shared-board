@@ -8,11 +8,15 @@ const Header = () => {
   const { isAuthenticated, user } = useContext(AuthContext);
   const { open } = useContext(DialogContext);
 
+  const handleOpenAddCardModal = () => {
+    open('addCard');
+  }
+
   const renderSignin = () => {
     if (isAuthenticated) {
       return (
         <>
-          <Button onClick={open} type="outlined" size="xs">+ Add Card</Button>
+          <Button onClick={handleOpenAddCardModal} type="outlined" size="xs">+ Add Card</Button>
           <span>Hello {user?.name}!</span>
         </>
       );
