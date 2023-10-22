@@ -6,11 +6,12 @@ type Props = {
 
 type Metadata = {
   name?: string;
+  title?: string;
 }
 
 type DialogContextType = {
   isOpen: boolean;
-  open: (name: string) => void;
+  open: (name: string, title: string) => void;
   close: () => void;
   metadata?: Metadata;
   setMetadata?: (meta: Metadata) => void;
@@ -26,8 +27,8 @@ const DialogProvider: FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [metadata, setMetadata] = useState({});
 
-  const open = (name: string) => {
-    setMetadata({ name });
+  const open = (name: string, title: string) => {
+    setMetadata({ name, title });
     setIsOpen(true);
   }
 

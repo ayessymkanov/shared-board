@@ -52,7 +52,9 @@ const AuthProvider: FC<Props> = ({ children }) => {
 
     if (
       (networkStatus === NetworkStatus.error && error && !isAuthenticated) ||
-      (networkStatus === NetworkStatus.ready && data && isAuthenticated)
+      (networkStatus === NetworkStatus.ready && data && isAuthenticated) ||
+      window.location.pathname === '/signin' ||
+      window.location.pathname === '/join'
     ) {
       return children;
     }

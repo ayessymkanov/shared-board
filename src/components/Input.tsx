@@ -1,14 +1,15 @@
-import { ChangeEvent, FC } from "react";
+import { FC } from "react";
 import classnames from "classnames";
 
 type Props = {
   type: "email" | "text" | "password";
   value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: any) => void;
   label: string;
   className?: string;
   name: string;
   error?: string;
+  placeholder?: string;
 };
 
 const Input: FC<Props> = ({
@@ -19,6 +20,7 @@ const Input: FC<Props> = ({
   className,
   name,
   error,
+  placeholder,
 }) => {
   const defaultClassName = "flex flex-col";
   const inputClassName = `
@@ -29,17 +31,20 @@ const Input: FC<Props> = ({
     dark:focus:border-blue-500`;
   return (
     <div className={classnames(defaultClassName, className)}>
-      <label htmlFor={name} className="mb-1">
-        {label}
-      </label>
+      <div className="flex items-baseline justify-between gap-3">
+        <label htmlFor={name} className="mb-1 text-sm">
+          {label}
+        </label>
+        <span className="text-red-400 text-xs">{error}</span>
+      </div>
       <input
         type={type}
         value={value}
         name={name}
         className={inputClassName}
         onChange={onChange}
+        placeholder={placeholder}
       />
-      <span className="text-red-400 text-xs">{error}</span>
     </div>
   );
 };

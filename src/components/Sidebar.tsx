@@ -97,7 +97,7 @@ const Sidebar = () => {
         <ul className="space-y-2 font-medium w-full">
           <li>
             <Link to="/" replace className={itemClassName}>
-              My dashboard
+              My calendar
             </Link>
           </li>
           <li>

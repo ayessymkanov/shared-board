@@ -9,7 +9,7 @@ const Header = () => {
   const { open } = useContext(DialogContext);
 
   const handleOpenAddCardModal = () => {
-    open('addCard');
+    open('addCard', 'New card');
   }
 
   const renderSignin = () => {

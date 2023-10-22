@@ -1,0 +1,11 @@
+import useCalendar from "./useCalendar";
+
+const Calendar = () => {
+  const { days, currentMonth } = useCalendar();
+  console.log({ days, currentMonth })
+  return (
+    <div>calendar</div>
+  );
+}
+
+export default Calendar;

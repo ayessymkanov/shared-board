@@ -37,8 +37,9 @@ type TeamData = TeamQuery["team"] & {
 }
 
 const useTeam = (id: number) => {
-  const { data, loading, error } = useQuery(TEAM, {
+  const { data, loading, error, refetch } = useQuery(TEAM, {
     variables: { id },
+    fetchPolicy: 'no-cache',
   });
   let teamData: TeamData = {} as TeamData;
 
@@ -64,6 +65,7 @@ const useTeam = (id: number) => {
     teamData,
     loading,
     error,
+    refetch,
   };
 }
 
