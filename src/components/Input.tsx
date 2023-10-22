@@ -1,7 +1,7 @@
-import { FC } from "react";
+import { RefObject, forwardRef } from "react";
 import classnames from "classnames";
 
-type Props = {
+export type Props = {
   type: "email" | "text" | "password";
   value: string;
   onChange: (e: any) => void;
@@ -10,9 +10,12 @@ type Props = {
   name: string;
   error?: string;
   placeholder?: string;
+  ref?: RefObject<HTMLElement>;
+  onFocus?: (e: any) => void;
+  onBlur?: (e: any) => void;
 };
 
-const Input: FC<Props> = ({
+const Input = forwardRef<HTMLInputElement, Props>(({
   type,
   value,
   onChange,
@@ -21,7 +24,9 @@ const Input: FC<Props> = ({
   name,
   error,
   placeholder,
-}) => {
+  onBlur,
+  onFocus,
+}, ref) => {
   const defaultClassName = "flex flex-col";
   const inputClassName = `
     bg-gray-50 border border-gray-300 text-gray-900 text-sm 
@@ -44,9 +49,12 @@ const Input: FC<Props> = ({
         className={inputClassName}
         onChange={onChange}
         placeholder={placeholder}
+        ref={ref}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
     </div>
   );
-};
+});
 
 export default Input;

@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { gql } from "../__generated__/gql";
 import Button from "./Button";
 import Input from "./Input";
+import Datepicker from "./Datepicker";
 
 type Props = {
   close: () => void;
@@ -75,7 +76,7 @@ const AddCardForm: FC<Props> = ({ close }) => {
       }}
       onSubmit={handleSubmit}
     >
-      {({ errors, touched }) => (
+      {({ errors, touched, setFieldValue }) => (
         <Form className="flex flex-col gap-2">
           <Field
             name="title"
@@ -126,10 +127,11 @@ const AddCardForm: FC<Props> = ({ close }) => {
             name="date"
           >
             {({ field }: FieldProps) => (
-              <Input
-                value={field.value as string}
+              <Datepicker
+                value={field.value}
                 onChange={field.onChange}
-                label="Due Date"
+                setValue={(value: string) => { setFieldValue('date', value) }}
+                label="Date"
                 name="date"
                 type="text"
                 placeholder="MM-DD-YYYY"

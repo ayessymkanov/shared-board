@@ -24,6 +24,8 @@ export type Day = {
 type Result = {
   month: Array<Array<Day>>;
   currentDate: string;
+  currentMonth: number;
+  currentYear: number;
 }
 
 const useCalendar = (): Result => {
@@ -57,6 +59,8 @@ const useCalendar = (): Result => {
 
   return {
     currentDate: `${months[monthIndex]}, ${now.getFullYear()}`,
+    currentMonth: monthIndex + 1,
+    currentYear: now.getFullYear(),
     month,
   }
 }
