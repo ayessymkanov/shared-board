@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { gql } from "../../__generated__/gql";
 import { Card, TeamQuery, User } from "../../__generated__/graphql";
 
-const TEAM = gql(`
+export const TEAM = gql(`
   query Team($id: Int!) {
     team(id: $id) {
       name
@@ -42,7 +42,6 @@ const useTeam = (id: number) => {
     fetchPolicy: 'no-cache',
   });
   let teamData: TeamData = {} as TeamData;
-
 
   if (data) {
     const processed: Processed = {};

@@ -6,6 +6,7 @@ import Signup from "./routes/Signup";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Team from "./routes/Team";
 import Today from "./routes/Today";
+import Personal from "./routes/Personal";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/today" element={<Today />} />
           <Route path="/team/:id" element={<Team />} />
+          <Route path="/personal" element={<Personal />} />
         </Route>
         <Route path="/signin" element={<Signin />} />
         <Route path="/join" element={<Signup />} />

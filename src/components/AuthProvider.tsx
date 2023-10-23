@@ -22,6 +22,7 @@ const ME = gql(`
       name
       email
       id
+      personalBoardId
     }
   }
 `);

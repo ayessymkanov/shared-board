@@ -2,15 +2,11 @@ import { Navigate, useParams } from "react-router-dom";
 import classnames from "classnames";
 import TeamMemberColumn from "../../components/TeamMemberColumn";
 import useTeam from "./useTeam";
-import PageTitle from "../../components/PageTitle";
+import PageWrapper from "../../components/PageWrapper";
 
 const Team = () => {
   const params = useParams<{ id: string }>();
   const { teamData, loading, error } = useTeam(Number(params.id ?? 0));
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   if (error) {
     return <Navigate to="/" replace />;
@@ -19,8 +15,7 @@ const Team = () => {
   const className = classnames(`grid lg:grid-cols-3 gap-4 md:grid-cols-1`);
 
   return (
-    <div>
-      <PageTitle>{`${teamData.name} board`}</PageTitle>
+    <PageWrapper title={`${teamData.name} board`} loading={loading}>
       <div className={className}>
         {Object.keys(teamData.columns).map((m) => (
           <TeamMemberColumn
@@ -30,7 +25,7 @@ const Team = () => {
           />
         ))}
       </div>
-    </div>
+    </PageWrapper>
   );
 };
 

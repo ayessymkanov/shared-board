@@ -1,12 +1,11 @@
 import Calendar from "../components/Calendar";
-import PageTitle from "../components/PageTitle";
+import PageWrapper from "../components/PageWrapper";
 
 const Home = () => {
   return (
-    <div>
-      <PageTitle>My calendar</PageTitle>
+    <PageWrapper title="My calendar">
       <Calendar />
-    </div>
+    </PageWrapper>
   );
 };
 

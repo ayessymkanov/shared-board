@@ -4,6 +4,7 @@ import classnames from "classnames";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Dialog from "./Dialog";
+import Subheader from "./Subheader";
 
 type Props = {
   children: React.ReactNode;
@@ -22,15 +23,23 @@ const Layout: FC<Props> = ({ children }) => {
 
     return null;
   };
-  const childrenClassName = classnames("w-full transition-transform max-sm:-translate-x-32", {
+
+  const contentClassName = classnames("w-full transition-transform max-sm:-translate-x-32");
+  const childrenClassName = classnames("pt-4", {
     "pl-4": shouldRenderSidebar,
   });
+
   return (
     <main className="mx-auto relative pb-10">
       <Header />
-      <section className="flex items-baseline mx-auto">
+      <section className="flex mx-auto">
         {renderSidebar()}
-        <div className={childrenClassName}>{children}</div>
+        <div className={contentClassName}>
+          <Subheader />
+          <div className={childrenClassName}>
+            {children}
+          </div>
+        </div>
       </section>
       <Dialog />
     </main>

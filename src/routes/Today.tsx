@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { gql } from "../__generated__/gql";
 import CardComponent from "../components/Card";
 import { Card } from "../__generated__/graphql";
-import PageTitle from "../components/PageTitle";
+import PageWrapper from "../components/PageWrapper";
 
 const TODAY = gql(`
   query Today {
@@ -21,20 +21,12 @@ const Today = () => {
     fetchPolicy: 'no-cache',
   });
 
-  const renderCards = () => {
-    if (loading) {
-      return <div>Loading...</div>;
-    }
-    return data?.today.map((card) => <CardComponent isList card={card as Card} />);
-  }
-
   return (
-    <div>
-      <PageTitle>Here's what you have for today</PageTitle>
+    <PageWrapper title="Here's what you have for today" loading={loading}>
       <div className="flex flex-col gap-2">
-        {renderCards()}
+        {data?.today.map((card) => <CardComponent isList card={card as Card} />)}
       </div>
-    </div>
+    </PageWrapper>
   );
 }
 

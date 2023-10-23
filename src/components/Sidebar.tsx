@@ -107,6 +107,11 @@ const Sidebar = () => {
               Today
             </Link>
           </li>
+          <li>
+            <Link to="/personal" replace className={itemClassName}>
+              Personal
+            </Link>
+          </li>
           {renderTeamDropdown()}
           <li>
             <button
