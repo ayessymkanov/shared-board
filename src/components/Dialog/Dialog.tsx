@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { DialogContext } from "../DialogProvider";
 import AddCardForm from "../AddCardForm";
 import "./styles.css";
+import AddPersonalCardForm from "../AddPersonalCardForm";
 
 const Dialog = () => {
   const { isOpen, close, metadata } = useContext(DialogContext);
@@ -10,6 +11,9 @@ const Dialog = () => {
     switch (metadata?.name) {
       case 'addCard': {
         return <AddCardForm close={close} />;
+      }
+      case 'addPersonal': {
+        return <AddPersonalCardForm close={close} />;
       }
     }
     return null;

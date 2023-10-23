@@ -1,57 +1,45 @@
-import { gql, useQuery } from "@apollo/client";
-import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import classnames from "classnames";
-import { AuthContext } from "./AuthProvider";
+import { useQuery } from "@apollo/client";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { gql } from "../__generated__";
 
-type Team = {
-  name: string;
-  id: number;
-};
-
-const TEAMS = gql`
-  query {
+const TEAMS = gql(`
+  query Teams {
     teams {
       name
       id
     }
   }
-`;
+`);
+
+const itemClassName = "flex items-center w-full p-2 font-sm text-white group hover:bg-blue-800";
 
 const Sidebar = () => {
   const { data } = useQuery(TEAMS, {
     fetchPolicy: 'no-cache',
   });
-  const [teamsHidden, setTeamsHidden] = useState(false);
-  const { setIsAuthenticated = () => { } } = useContext(AuthContext);
-
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    localStorage.clear();
-    setIsAuthenticated(false);
-    navigate("/signin");
-  };
-
+  const [teamsHidden, setTeamsHidden] = useState(true);
   const toggleTeams = () => {
     setTeamsHidden((prev) => !prev);
   };
   const renderTeams = () => {
-    if (!data) {
+    if (!data?.teams || data?.teams.length === 0) {
       return null;
     }
 
-    return data.teams.map((team: Team) => {
-      const className =
-        "flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-6 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700";
-      return (
-        <li key={team.id}>
-          <Link to={`/team/${team.id}`} className={className}>
-            {team.name}
-          </Link>
-        </li>
-      );
-    });
+    return (
+      <ul className={`py-2 space-y-2 ${teamsHidden && "hidden"}`}>
+        {data.teams.map((team) => {
+          return (
+            <li key={team.id}>
+              <Link to={`/team/${team.id}`} className={itemClassName}>
+                {team.name}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    );
   };
 
   const renderTeamDropdown = () => {
@@ -59,44 +47,22 @@ const Sidebar = () => {
       <li>
         <button
           type="button"
-          className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+          className={itemClassName}
           onClick={toggleTeams}
         >
           <span className="flex-1 text-left whitespace-nowrap">
-            My teams
+            Shared boards
           </span>
-          <svg
-            className="w-3 h-3"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 10 6"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="m1 1 4 4 4-4"
-            />
-          </svg>
         </button>
-        <ul
-          id="dropdown-example"
-          className={`py-2 space-y-2 ${teamsHidden && "hidden"}`}
-        >
-          {renderTeams()}
-        </ul>
+        {renderTeams()}
       </li>
     );
   }
 
-  const itemClassName =
-    "flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700";
   return (
-    <aside className="w-64 h-[calc(100vh_-_4rem)] transition-transform -translate-x-full sm:translate-x-0">
-      <div className="flex w-full h-full px-1 py-4 overflow-y-auto border-r">
-        <ul className="space-y-2 font-medium w-full">
+    <aside className="w-64 h-[calc(100vh_-_3rem)] bg-blue-900">
+      <div className="flex w-full h-full py-4">
+        <ul className="w-full">
           <li>
             <Link to="/" replace className={itemClassName}>
               My calendar
@@ -113,14 +79,6 @@ const Sidebar = () => {
             </Link>
           </li>
           {renderTeamDropdown()}
-          <li>
-            <button
-              className={classnames(itemClassName, "text-red-700")}
-              onClick={handleLogout}
-            >
-              Sign out
-            </button>
-          </li>
         </ul>
       </div>
     </aside>

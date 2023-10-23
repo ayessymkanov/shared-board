@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  mutation AddCard($input: AddCardInput!) {\n    addCard(input: $input)\n  }\n": types.AddCardDocument,
     "\n  query Me{\n    me {\n      name\n      email\n      id\n      personalBoardId\n    }\n  }\n": types.MeDocument,
-    "\n  query Personal($id: Int!) {\n    team(id: $id) {\n      name\n    }\n  }\n": types.PersonalDocument,
+    "\n  query Teams {\n    teams {\n      name\n      id\n    }\n  }\n": types.TeamsDocument,
     "\n  mutation Login($input: LoginInput) {\n    login(input: $input)\n  }\n": types.LoginDocument,
     "\n  mutation Signup($input: SignupInput) {\n    signup(input: $input)\n  }\n": types.SignupDocument,
     "\n  query Team($id: Int!) {\n    team(id: $id) {\n      name\n      id\n      adminId\n      cards {\n        title\n        id\n        assigneeId\n        createdAt\n        teamId \n        status\n        dueDateTime\n        assignee {\n          name\n          email \n          id\n        }\n      }\n      teamMembers {\n        name\n        email\n        id\n      }\n    }\n  }\n": types.TeamDocument,
@@ -47,7 +47,7 @@ export function gql(source: "\n  query Me{\n    me {\n      name\n      email\n 
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query Personal($id: Int!) {\n    team(id: $id) {\n      name\n    }\n  }\n"): (typeof documents)["\n  query Personal($id: Int!) {\n    team(id: $id) {\n      name\n    }\n  }\n"];
+export function gql(source: "\n  query Teams {\n    teams {\n      name\n      id\n    }\n  }\n"): (typeof documents)["\n  query Teams {\n    teams {\n      name\n      id\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

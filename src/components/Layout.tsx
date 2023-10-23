@@ -24,13 +24,13 @@ const Layout: FC<Props> = ({ children }) => {
     return null;
   };
 
-  const contentClassName = classnames("w-full transition-transform max-sm:-translate-x-32");
-  const childrenClassName = classnames("pt-4", {
+  const contentClassName = classnames("w-full h-[calc(100vh_-_3rem)] overflow-y-auto pb-10");
+  const childrenClassName = classnames("pt-4 px-4", {
     "pl-4": shouldRenderSidebar,
   });
 
   return (
-    <main className="mx-auto relative pb-10">
+    <main className="mx-auto relative">
       <Header />
       <section className="flex mx-auto">
         {renderSidebar()}

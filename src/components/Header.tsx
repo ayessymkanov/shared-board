@@ -1,31 +1,34 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
-import Button from "./Button";
-import { DialogContext } from "./DialogProvider";
 
 const Header = () => {
   const { isAuthenticated, user } = useContext(AuthContext);
-  const { open } = useContext(DialogContext);
 
-  const handleOpenAddCardModal = () => {
-    open('addCard', 'New card');
-  }
+  const { setIsAuthenticated = () => { } } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    localStorage.clear();
+    setIsAuthenticated(false);
+    navigate("/signin");
+  };
 
   const renderSignin = () => {
     if (isAuthenticated) {
       return (
         <>
-          <Button onClick={handleOpenAddCardModal} type="outlined" size="xs">+ Add Card</Button>
-          <span>Hello {user?.name}!</span>
+          <span className="text-sm">Hello {user?.name}!</span>
+          <a onClick={handleLogout} className="font-sm text-sm text-red-600 hover:cursor-pointer">Sign out</a>
         </>
       );
     }
 
     return (
       <>
-        <Link to="/signin">Sign in</Link>
-        <Link to="/join">Sign up</Link>
+        <Link to="/signin" className="text-sm">Sign in</Link>
+        <Link to="/join" className="text-sm">Sign up</Link>
       </>
     );
   };
