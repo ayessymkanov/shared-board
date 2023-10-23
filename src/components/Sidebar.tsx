@@ -19,13 +19,15 @@ const TEAMS = gql`
 `;
 
 const Sidebar = () => {
-  const { data } = useQuery(TEAMS);
+  const { data } = useQuery(TEAMS, {
+    fetchPolicy: 'no-cache',
+  });
   const [teamsHidden, setTeamsHidden] = useState(false);
   const { setIsAuthenticated = () => { } } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     localStorage.clear();
     setIsAuthenticated(false);
     navigate("/signin");

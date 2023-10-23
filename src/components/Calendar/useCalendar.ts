@@ -28,8 +28,7 @@ type Result = {
   currentYear: number;
 }
 
-const useCalendar = (): Result => {
-  const now = new Date();
+const useCalendar = (now: Date = new Date()): Result => {
   const monthIndex = now.getMonth();
   const first = new Date(`${monthIndex + 1}/1/${now.getFullYear()}`);
   const firstDay = first.getDay();

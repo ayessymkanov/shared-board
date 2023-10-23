@@ -22,13 +22,13 @@ const Layout: FC<Props> = ({ children }) => {
 
     return null;
   };
-  const childrenClassName = classnames("w-full", {
+  const childrenClassName = classnames("w-full transition-transform max-sm:-translate-x-32", {
     "pl-4": shouldRenderSidebar,
   });
   return (
     <main className="mx-auto relative pb-10">
       <Header />
-      <section className="flex items-baseline container mx-auto">
+      <section className="flex items-baseline mx-auto">
         {renderSidebar()}
         <div className={childrenClassName}>{children}</div>
       </section>

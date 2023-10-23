@@ -135,6 +135,7 @@ const AddCardForm: FC<Props> = ({ close }) => {
                 name="date"
                 type="text"
                 placeholder="MM-DD-YYYY"
+                autoComplete="off"
                 error={touched.date ? errors.date : ""}
               />
             )}

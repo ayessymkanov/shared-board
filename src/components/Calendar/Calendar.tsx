@@ -1,19 +1,34 @@
+import classNames from "classnames";
 import useCalendar from "./useCalendar";
 import Week from "./Week";
 
+// const weekDays = [
+//   "Monday",
+//   "Tuesday",
+//   "Wednesday",
+//   "Thursday",
+//   "Friday",
+//   "Saturday",
+//   "Sunday",
+// ];
 const weekDays = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
+  "Mo",
+  "Tu",
+  "We",
+  "Th",
+  "Fr",
+  "Sa",
+  "Su",
 ];
 
 const WeekDays = () => {
+  const className = classNames(
+    "w-20 text-xs text-center p-2 rounded mb-1",
+    "sm:w-24 sm:text-sm",
+    "md:w-28 md:text-base"
+  );
   const days = weekDays.map((day) => (
-    <div className="w-28 text-center p-2 rounded mb-1">{day}</div>
+    <div className={className}>{day}</div>
   ));
 
   return (

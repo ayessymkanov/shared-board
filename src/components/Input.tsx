@@ -13,6 +13,7 @@ export type Props = {
   ref?: RefObject<HTMLElement>;
   onFocus?: (e: any) => void;
   onBlur?: (e: any) => void;
+  autoComplete?: "off" | "on";
 };
 
 const Input = forwardRef<HTMLInputElement, Props>(({
@@ -26,6 +27,7 @@ const Input = forwardRef<HTMLInputElement, Props>(({
   placeholder,
   onBlur,
   onFocus,
+  autoComplete,
 }, ref) => {
   const defaultClassName = "flex flex-col";
   const inputClassName = `
@@ -52,6 +54,7 @@ const Input = forwardRef<HTMLInputElement, Props>(({
         ref={ref}
         onFocus={onFocus}
         onBlur={onBlur}
+        autoComplete={autoComplete}
       />
     </div>
   );

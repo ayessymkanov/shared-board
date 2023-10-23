@@ -16,7 +16,7 @@ const Dialog = () => {
   }
 
   return (
-    <dialog open={isOpen} className="absolute top-1/2 shadow-backdrop -translate-y-1/2 rounded">
+    <dialog open={isOpen} className="absolute top-20 shadow-backdrop rounded">
       <div className="relative border w-96 h-auto rounded">
         <header className="flex justify-between items-center border-b p-4">
           <span>{metadata?.title}</span>

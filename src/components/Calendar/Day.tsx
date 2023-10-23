@@ -15,7 +15,10 @@ const Day: FC<Props> = ({ day }) => {
     setIsHovered(false);
   }
 
-  const className = classNames("w-28 h-24 p-2 relative", {
+  const className = classNames(
+    "w-20 h-20 text-xs p-2 relative",
+    "sm:w-20 sm:h-20 sm:text-sm",
+    "md:w-28 md:h-24 md:text-base", {
     "border rounded": Boolean(day),
     "bg-gray-100": day?.isWeekend,
   });

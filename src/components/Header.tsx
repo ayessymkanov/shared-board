@@ -31,7 +31,7 @@ const Header = () => {
   };
   return (
     <nav className="w-full h-12 border-b">
-      <div className="flex justify-between items-center h-full container mx-auto">
+      <div className="flex justify-between items-center h-full px-2 mx-auto">
         <Link to="/">BOARD</Link>
         <div className="flex gap-x-3 items-center">
           {renderSignin()}
