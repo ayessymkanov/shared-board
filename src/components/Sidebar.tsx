@@ -12,7 +12,7 @@ const TEAMS = gql(`
   }
 `);
 
-const itemClassName = "flex items-center w-full p-2 text-sm text-white group hover:bg-blue-800";
+const itemClassName = "flex items-center w-full p-2 text-white group hover:bg-blue-800";
 
 const Sidebar = () => {
   const { data } = useQuery(TEAMS, {

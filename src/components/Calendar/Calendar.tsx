@@ -45,8 +45,8 @@ const Calendar: FC<CalendarProps> = ({ onDayClick, activeDay }) => {
   }
 
   return (
-    <div>
-      <div className="mb-3 text-lg">{currentDate}</div>
+    <div className="bg-white rounded p-4">
+      <div className="mb-3 text-lg text-center">{currentDate}</div>
       <WeekDays />
       {renderMonth()}
     </div>

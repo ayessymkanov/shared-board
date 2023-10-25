@@ -9,12 +9,12 @@ type Props = {
 }
 const Day: FC<Props> = ({ day, onClick, isActive }) => {
   const className = classNames(
-    "w-20 h-20 text-xs p-2 relative ",
+    "w-20 h-20 text-xs p-2 relative transition-colors duration-300",
     "sm:w-20 sm:h-20 sm:text-sm",
     "md:w-28 md:h-24 md:text-base", {
-    "border rounded hover:bg-gray-200 hover:cursor-pointer": Boolean(day),
+    "border border-blue-200 rounded hover:bg-gray-200 hover:cursor-pointer": Boolean(day),
     "bg-gray-100": day?.isWeekend,
-    "border-blue-700": isActive,
+    "bg-blue-300 hover:bg-blue-300": isActive,
   });
   const labelClassName = classNames("rounded-full p-2", {
     "bg-blue-700 text-white": day?.isToday,
