@@ -38,7 +38,6 @@ const AuthProvider: FC<Props> = ({ children }) => {
   const [user, setUser] = useState<User | undefined>(undefined);
 
   useEffect(() => {
-    console.log({ data });
     if (networkStatus === NetworkStatus.ready) {
       setIsAuthenticated(Boolean(data));
       setUser(data?.me);

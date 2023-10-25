@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { Form, Formik, Field, FieldProps } from "formik";
 import * as Yup from "yup";
-import { gql } from "../__generated__/gql";
+import { gql } from "../__generated__";
 import Button from "./Button";
 import Input from "./Input";
 import Datepicker from "./Datepicker";
@@ -41,7 +41,6 @@ const AddCardForm: FC<Props> = ({ close }) => {
   const [formError, setFormError] = useState("");
   const handleSubmit = async (values: FormValues) => {
     try {
-      console.log(values);
       await addCard({
         variables: {
           input: {
