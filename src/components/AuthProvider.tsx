@@ -2,7 +2,7 @@ import { createContext, FC, ReactNode, useEffect, useState } from "react";
 import { useQuery, NetworkStatus } from "@apollo/client";
 import type { ApolloQueryResult } from "@apollo/client";
 import LoadingOverlay from "./LoadingOverlay";
-import { gql } from "../__generated__/gql";
+import { gql } from "../__generated__";
 import { User } from "../__generated__/graphql";
 
 type AuthContextType = {
@@ -38,6 +38,7 @@ const AuthProvider: FC<Props> = ({ children }) => {
   const [user, setUser] = useState<User | undefined>(undefined);
 
   useEffect(() => {
+    console.log({ data });
     if (networkStatus === NetworkStatus.ready) {
       setIsAuthenticated(Boolean(data));
       setUser(data?.me);

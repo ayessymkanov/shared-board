@@ -6,7 +6,7 @@ import { validate } from "../utils/validation";
 import Input from "../components/Input";
 import Link from "../components/Link";
 import Button from "../components/Button";
-import { gql } from "../__generated__/gql";
+import { gql } from "../__generated__";
 
 const LOGIN = gql(`
   mutation Login($input: LoginInput) {
@@ -15,7 +15,7 @@ const LOGIN = gql(`
 `);
 
 const Signin = () => {
-  const [login, { loading, error }] = useMutation(LOGIN);
+  const [login, { loading, error, client }] = useMutation(LOGIN);
   const {
     refetchMe,
     isAuthenticated,
@@ -36,6 +36,7 @@ const Signin = () => {
       return setFormErrors(errors);
     }
     try {
+      await client.clearStore();
       const loginData = await login({
         variables: { input: { email, password } },
       });

@@ -5,7 +5,7 @@ import { AuthContext } from "../components/AuthProvider";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { validate } from "../utils/validation";
-import { gql } from "../__generated__/gql";
+import { gql } from "../__generated__";
 
 const SIGNUP = gql(`
   mutation Signup($input: SignupInput) {
@@ -23,7 +23,7 @@ const Signup = () => {
     refetchMe,
     isAuthenticated,
   } = useContext(AuthContext);
-  const [signup, { loading }] = useMutation(SIGNUP, {});
+  const [signup, { loading, client }] = useMutation(SIGNUP, {});
 
   const handleSignup = async (e: FormEvent) => {
     e.preventDefault();
@@ -37,6 +37,7 @@ const Signup = () => {
       return setFormErrors(errors);
     }
     try {
+      await client.clearStore();
       const s = await signup({
         variables: {
           input: {

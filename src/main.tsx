@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { ApolloProvider } from "@apollo/client";
 import { BrowserRouter } from "react-router-dom";
@@ -9,15 +8,13 @@ import AuthProvider from "./components/AuthProvider";
 import DialogProvider from "./components/DialogProvider";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <ApolloProvider client={client}>
-      <AuthProvider>
-        <DialogProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </DialogProvider>
-      </AuthProvider>
-    </ApolloProvider>
-  </React.StrictMode>
+  <ApolloProvider client={client}>
+    <AuthProvider>
+      <DialogProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </DialogProvider>
+    </AuthProvider>
+  </ApolloProvider>
 );

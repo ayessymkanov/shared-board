@@ -17,6 +17,7 @@ const numDays = (y: number, m: number) => new Date(y, m + 1, 0).getDate();
 
 export type Day = {
   day: number;
+  date: string;
   isToday: boolean;
   isWeekend?: boolean;
 };
@@ -24,6 +25,7 @@ export type Day = {
 type Result = {
   month: Array<Array<Day>>;
   currentDate: string;
+  currentDay: number;
   currentMonth: number;
   currentYear: number;
 }
@@ -45,6 +47,7 @@ const useCalendar = (now: Date = new Date()): Result => {
   for (let i = 1; i <= numberOfDaysInMonth; i++) {
     month[currentRow][currentCol] = {
       day: i,
+      date: `${monthIndex + 1}/${i}/${now.getFullYear()}`,
       isToday: `${monthIndex}/${i}/${now.getFullYear()}` === `${monthIndex}/${now.getDate()}/${now.getFullYear()}`,
       isWeekend: currentCol === 5 || currentCol === 6,
     };
@@ -60,6 +63,7 @@ const useCalendar = (now: Date = new Date()): Result => {
     currentDate: `${months[monthIndex]}, ${now.getFullYear()}`,
     currentMonth: monthIndex + 1,
     currentYear: now.getFullYear(),
+    currentDay: now.getDate(),
     month,
   }
 }

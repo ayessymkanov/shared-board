@@ -1,16 +1,13 @@
 import classNames from "classnames";
 import useCalendar from "./useCalendar";
 import Week from "./Week";
+import { FC } from "react";
 
-// const weekDays = [
-//   "Monday",
-//   "Tuesday",
-//   "Wednesday",
-//   "Thursday",
-//   "Friday",
-//   "Saturday",
-//   "Sunday",
-// ];
+type CalendarProps = {
+  onDayClick: (date: string) => void;
+  activeDay: number;
+}
+
 const weekDays = [
   "Mo",
   "Tu",
@@ -28,7 +25,7 @@ const WeekDays = () => {
     "md:w-28 md:text-base"
   );
   const days = weekDays.map((day) => (
-    <div className={className}>{day}</div>
+    <div key={day} className={className}>{day}</div>
   ));
 
   return (
@@ -36,13 +33,13 @@ const WeekDays = () => {
   );
 }
 
-const Calendar = () => {
+const Calendar: FC<CalendarProps> = ({ onDayClick, activeDay }) => {
   const { currentDate, month } = useCalendar();
 
   const renderMonth = () => {
     return (
-      <div className="flex flex-col gap-1">
-        {month.map((week, index) => <Week key={index} week={week} />)}
+      <div className="flex flex-col gap-1 w-full">
+        {month.map((week, index) => <Week key={index} week={week} activeDay={activeDay} onDayClick={onDayClick} />)}
       </div>
     );
   }

@@ -12,7 +12,7 @@ const TEAMS = gql(`
   }
 `);
 
-const itemClassName = "flex items-center w-full p-2 font-sm text-white group hover:bg-blue-800";
+const itemClassName = "flex items-center w-full p-2 text-sm text-white group hover:bg-blue-800";
 
 const Sidebar = () => {
   const { data } = useQuery(TEAMS, {
@@ -69,13 +69,8 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/today" replace className={itemClassName}>
-              Today
-            </Link>
-          </li>
-          <li>
             <Link to="/personal" replace className={itemClassName}>
-              Personal
+              Personal Board
             </Link>
           </li>
           {renderTeamDropdown()}

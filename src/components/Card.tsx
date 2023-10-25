@@ -13,7 +13,10 @@ const CardComponent: FC<Props> = ({ card, isList }) => {
         <h5 className="text-md font-medium tracking-tight text-gray-900 dark:text-white">
           {card.title}
         </h5>
-        <span className="font-normal text-sm">{card.status}</span>
+        <div>
+          <span className="font-normal text-sm">{card.team?.name}</span>
+          <span className="font-normal text-sm">{card.status}</span>
+        </div>
       </div>
     );
   }
