@@ -31,7 +31,7 @@ export const TEAM = gql(`
   }
 `);
 
-type Processed = Record<string, User & { cards: Array<Card> }>;
+type Processed = Record<string, User & { cards: Array<Partial<Card>> }>;
 type TeamData = TeamQuery["team"] & {
   columns: Processed;
 }

@@ -1,14 +1,9 @@
 import { FC } from "react";
 import Card from "./Card";
-
-type CardType = {
-  title: string;
-  id: string;
-  assigneeId: number;
-};
+import { Card as CardType } from "../__generated__/graphql";
 
 type Props = {
-  cards?: Array<CardType>;
+  cards?: Array<Partial<CardType>>;
   title: string;
 };
 
