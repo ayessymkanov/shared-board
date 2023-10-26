@@ -1,7 +1,8 @@
 import { useQuery } from "@apollo/client";
-import { useState } from "react";
+import { FC, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { gql } from "../__generated__";
+import classNames from "classnames";
 
 const TEAMS = gql(`
   query Teams {
@@ -12,16 +13,29 @@ const TEAMS = gql(`
   }
 `);
 
-const itemClassName = "flex items-center w-full p-2 text-white group hover:bg-blue-800";
+const sidebarItems: { to: string, title: string }[] = [
+  { to: "/", title: "Calendar" },
+  { to: "/personal", title: "Personal" },
+];
 
-const Sidebar = () => {
+const itemClassName = "flex items-center font-light w-full p-2 group hover:bg-gray-100";
+
+type Props = {
+  isOpen?: boolean;
+  hideSidebar: () => void;
+}
+
+const Sidebar: FC<Props> = ({ isOpen, hideSidebar }) => {
   const { data } = useQuery(TEAMS, {
     fetchPolicy: 'no-cache',
   });
   const [teamsHidden, setTeamsHidden] = useState(true);
+  const ref = useRef(null);
+
   const toggleTeams = () => {
     setTeamsHidden((prev) => !prev);
   };
+
   const renderTeams = () => {
     if (!data?.teams || data?.teams.length === 0) {
       return null;
@@ -59,20 +73,21 @@ const Sidebar = () => {
     );
   }
 
+  const className = classNames("w-64 h-[calc(100vh_-_3rem)] overflow-y-auto bg-white transition-transform duration-200 absolute -left-64 z-10", {
+    "translate-x-64 shadow border-r": isOpen,
+  });
+
   return (
-    <aside className="w-64 h-[calc(100vh_-_3rem)] bg-blue-900">
+    <aside className={className} ref={ref}>
       <div className="flex w-full h-full py-4">
         <ul className="w-full">
-          <li>
-            <Link to="/" replace className={itemClassName}>
-              My calendar
-            </Link>
-          </li>
-          <li>
-            <Link to="/personal" replace className={itemClassName}>
-              Personal Board
-            </Link>
-          </li>
+          {sidebarItems.map(({ to, title }) => (
+            <li onClick={hideSidebar}>
+              <Link to={to} replace className={itemClassName}>
+                {title}
+              </Link>
+            </li>
+          ))}
           {renderTeamDropdown()}
         </ul>
       </div>

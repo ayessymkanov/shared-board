@@ -1,8 +1,13 @@
-import { useContext } from "react";
+import { FC, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
+import HamburgerMenu from "./HamburgerMenu";
 
-const Header = () => {
+type Props = {
+  toggleSidebar: () => void;
+}
+
+const Header: FC<Props> = ({ toggleSidebar }) => {
   const { isAuthenticated, user } = useContext(AuthContext);
 
   const { setIsAuthenticated = () => { } } = useContext(AuthContext);
@@ -35,7 +40,10 @@ const Header = () => {
   return (
     <nav className="w-full h-12 border-b">
       <div className="flex justify-between items-center h-full px-2 mx-auto">
-        <Link to="/">BOARD</Link>
+        <div className="flex items-center gap-2">
+          <HamburgerMenu onClick={toggleSidebar} />
+          <Link to="/">SharedBoard</Link>
+        </div>
         <div className="flex gap-x-3 items-center">
           {renderSignin()}
         </div>

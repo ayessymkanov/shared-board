@@ -9,7 +9,7 @@ type Props = {
 const CardComponent: FC<Props> = ({ card, isList }) => {
   if (isList) {
     return (
-      <div className="w-full flex justify-between items-center px-3 py-2 border rounded shadow-md bg-white">
+      <div className="w-full flex justify-between items-center px-3 py-2 border border-gray-300 rounded shadow-md bg-white">
         <div>
           <h5 className="text-md font-medium tracking-tight text-gray-900 dark:text-white">
             {card.title}
@@ -23,7 +23,7 @@ const CardComponent: FC<Props> = ({ card, isList }) => {
     );
   }
   return (
-    <div className="flex flex-col w-full block p-2 bg-white border-gray-200 rounded shadow-md bg-white">
+    <div className="flex flex-col w-full block p-2 bg-white border-gray-300 rounded shadow-md bg-white border">
       <h5 className="mb-2 text-md font-medium tracking-tight text-gray-900 dark:text-white">
         {card.title}
       </h5>

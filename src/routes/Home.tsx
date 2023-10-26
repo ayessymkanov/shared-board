@@ -7,6 +7,7 @@ import useCalendar from "../components/Calendar/useCalendar";
 import CardComponent from "../components/Card";
 import { Card } from "../__generated__/graphql";
 import { getDateObject } from "../utils/date";
+import classNames from "classnames";
 
 const CARDS = gql(`
   query GetCards($input: CardsFilterInput) {
@@ -41,11 +42,11 @@ const Home = () => {
 
   const renderDayTasks = () => {
     if (loading) {
-      return <div className="text-white">Loading...</div>;
+      return <div>Loading...</div>;
     }
 
     if (data?.cards.length === 0) {
-      return <span className="text-white">No tasks for today!</span>;
+      return <span>No tasks for today!</span>;
     }
 
     return data?.cards.map((card) => <CardComponent key={card.id} isList card={card as Card} />);
@@ -53,19 +54,29 @@ const Home = () => {
 
   const dateObject = getDateObject(currentDate);
 
+  const renderToday = () => {
+    const wrapperClassName = classNames(
+      "py-1 md:py-6 flex grow flex-col gap-10 md:w-80"
+    );
+
+    return (
+      <div className={wrapperClassName}>
+        <div className="flex flex-col items-center">
+          <span className="text-4xl md:text-6xl">{dateObject.day}</span>
+          <span className="text-2xl md:text-3xl">{dateObject.weekDay}</span>
+        </div>
+        <div className="flex flex-col gap-2 px-4 py-6">
+          {renderDayTasks()}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <PageWrapper>
-      <div className="w-full flex border border-blue-800 rounded bg-blue-800">
-        <div className="w-80 py-6 pt-20 flex flex-col gap-10 border-r border-blue-800 bg-blue-800">
-          <div className="flex flex-col items-center text-white">
-            <span className="text-6xl">{dateObject.day}</span>
-            <span className="text-3xl">{dateObject.weekDay}</span>
-          </div>
-          <div className="flex flex-col gap-2 px-4 py-6">
-            {renderDayTasks()}
-          </div>
-        </div>
-        <div className="p-4 pl-0">
+      <div className="w-full flex flex-col-reverse md:flex-row">
+        {renderToday()}
+        <div className="p-4 pl-0 min-w-0 grow md:grow-[2]">
           <Calendar activeDay={currentDate.getDate()} onDayClick={handleDayClick} />
         </div>
       </div>
