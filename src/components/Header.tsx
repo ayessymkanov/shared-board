@@ -41,7 +41,7 @@ const Header: FC<Props> = ({ toggleSidebar }) => {
     <nav className="w-full h-12 border-b">
       <div className="flex justify-between items-center h-full px-2 mx-auto">
         <div className="flex items-center gap-2">
-          <HamburgerMenu onClick={toggleSidebar} />
+          {isAuthenticated && <HamburgerMenu onClick={toggleSidebar} />}
           <Link to="/">SharedBoard</Link>
         </div>
         <div className="flex gap-x-3 items-center">

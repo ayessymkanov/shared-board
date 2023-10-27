@@ -65,7 +65,7 @@ const Home = () => {
           <span className="text-4xl md:text-6xl">{dateObject.day}</span>
           <span className="text-2xl md:text-3xl">{dateObject.weekDay}</span>
         </div>
-        <div className="flex flex-col gap-2 px-4 py-6">
+        <div className="flex flex-col gap-2 sm:px-4 py-6">
           {renderDayTasks()}
         </div>
       </div>
@@ -76,7 +76,7 @@ const Home = () => {
     <PageWrapper>
       <div className="w-full flex flex-col-reverse md:flex-row">
         {renderToday()}
-        <div className="p-4 pl-0 min-w-0 grow md:grow-[2]">
+        <div className="sm:p-4 sm:pl-0 min-w-0 grow md:grow-[2]">
           <Calendar activeDay={currentDate.getDate()} onDayClick={handleDayClick} />
         </div>
       </div>
