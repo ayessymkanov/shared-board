@@ -34,9 +34,7 @@ const Layout: FC<Props> = ({ children }) => {
   };
 
   const contentClassName = classnames("w-full h-[calc(100vh_-_3rem)] overflow-y-auto pb-10 absolute z-0 left-1/2 -translate-x-1/2 border");
-  const childrenClassName = classnames("pt-4 px-4", {
-    "pl-4": shouldRenderSidebar,
-  });
+  const childrenClassName = classnames("pt-4 px-4");
 
   return (
     <main className="mx-auto relative">
