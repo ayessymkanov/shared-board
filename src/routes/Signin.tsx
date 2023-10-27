@@ -1,4 +1,4 @@
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "../components/AuthProvider";
@@ -24,6 +24,12 @@ const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    (async function() {
+      await client.clearStore();
+    })();
+  }, []);
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();

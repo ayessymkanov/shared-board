@@ -7,15 +7,16 @@ import Button from "./Button";
 import Input from "./Input";
 import Datepicker from "./Datepicker";
 
-type Props = {
-  close: () => void;
-}
-
 type FormValues = {
   title: string;
   team: string;
   assignee: string;
   date: string;
+}
+
+type Props = {
+  close: () => void;
+  initialValues?: Partial<FormValues>;
 }
 
 const ADD_CARD = gql(`
@@ -36,7 +37,7 @@ const validationSchema = Yup.object().shape({
   date: Yup.string().required('Date is required').matches(/^(0[1-9]|1[0-2])\-(0[1-9]|1\d|2\d|3[01])\-(19|20)\d{2}$/, "Date should follow MM-DD-YYYY format")
 });
 
-const AddCardForm: FC<Props> = ({ close }) => {
+const AddCardForm: FC<Props> = ({ close, initialValues }) => {
   const [addCard, { error, client }] = useMutation(ADD_CARD);
   const [formError, setFormError] = useState("");
   const handleSubmit = async (values: FormValues) => {
@@ -68,10 +69,10 @@ const AddCardForm: FC<Props> = ({ close }) => {
     <Formik
       validationSchema={validationSchema}
       initialValues={{
-        title: '',
-        assignee: '',
-        date: '',
-        team: '',
+        title: initialValues?.title ?? '',
+        assignee: initialValues?.assignee ?? '',
+        date: initialValues?.date ?? '',
+        team: initialValues?.team ?? '',
       }}
       onSubmit={handleSubmit}
     >

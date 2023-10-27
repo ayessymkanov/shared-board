@@ -1,8 +1,12 @@
 import { useQuery } from "@apollo/client";
-import { FC, useRef, useState } from "react";
+import { FC, useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { useOnClickOutside } from "usehooks-ts";
 import { gql } from "../__generated__";
 import classNames from "classnames";
+import { AuthContext } from "./AuthProvider";
+import Chevron from "./Chevron";
+import { DialogContext } from "./DialogProvider";
 
 const TEAMS = gql(`
   query Teams {
@@ -26,27 +30,34 @@ type Props = {
 }
 
 const Sidebar: FC<Props> = ({ isOpen, hideSidebar }) => {
+  const { user } = useContext(AuthContext);
+  const { open } = useContext(DialogContext);
   const { data } = useQuery(TEAMS, {
     fetchPolicy: 'no-cache',
   });
-  const [teamsHidden, setTeamsHidden] = useState(true);
+  const [teamsHidden, setTeamsHidden] = useState(false);
   const ref = useRef(null);
+  useOnClickOutside(ref, hideSidebar);
 
   const toggleTeams = () => {
     setTeamsHidden((prev) => !prev);
   };
 
-  const renderTeams = () => {
-    if (!data?.teams || data?.teams.length === 0) {
-      return null;
-    }
+  const handleAddNewBoard = () => {
+    hideSidebar();
+    open("addBoard", "Create a new Shared Board");
+  }
 
+  const renderTeams = () => {
     return (
-      <ul className={`py-2 space-y-2 ${teamsHidden && "hidden"}`}>
-        {data.teams.map((team) => {
+      <ul className={`${teamsHidden && "hidden"}`}>
+        <li onClick={handleAddNewBoard} className={itemClassName}>
+          <a className="font-sm text-sm text-blue-600 hover:cursor-pointer">+ Add a new Shared Board</a>
+        </li>
+        {data?.teams.map((team) => {
           return (
-            <li key={team.id}>
-              <Link to={`/team/${team.id}`} className={itemClassName}>
+            <li key={team.id} onClick={hideSidebar}>
+              <Link to={`/team/${team.id}`} state={{ boardName: team.name }} className={classNames(itemClassName, "pl-4")}>
                 {team.name}
               </Link>
             </li>
@@ -61,25 +72,28 @@ const Sidebar: FC<Props> = ({ isOpen, hideSidebar }) => {
       <li>
         <button
           type="button"
-          className={itemClassName}
+          className={classNames(itemClassName, "flex justify-between")}
           onClick={toggleTeams}
         >
           <span className="flex-1 text-left whitespace-nowrap">
             Shared boards
           </span>
+          <Chevron isDown={!teamsHidden} />
         </button>
         {renderTeams()}
       </li>
     );
   }
 
-  const className = classNames("w-64 h-[calc(100vh_-_3rem)] overflow-y-auto bg-white transition-transform duration-200 absolute -left-64 z-10", {
+  const className = classNames(
+    "w-64 h-[calc(100vh_-_3rem)] overflow-y-auto bg-white transition-transform duration-200 absolute -left-64 z-10", {
     "translate-x-64 shadow border-r": isOpen,
   });
 
   return (
     <aside className={className} ref={ref}>
-      <div className="flex w-full h-full py-4">
+      <div className="flex flex-col w-full h-full py-4 gap-4">
+        <span className="pl-2 text-base font-bold">Hello {user?.name}!</span>
         <ul className="w-full">
           {sidebarItems.map(({ to, title }) => (
             <li onClick={hideSidebar}>

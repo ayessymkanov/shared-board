@@ -2,38 +2,41 @@ import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { DialogContext } from "./DialogProvider";
 
-const routes = [
-  "/team",
-  "/personal",
+const NO_SUBHEADER_ROUTES = [
+  "/",
+  "/signin",
+  "/join"
 ];
 
-const Subheader = () => {
-  const { pathname } = useLocation();
-  const { open } = useContext(DialogContext);
+const linkClassName = "font-sm text-sm text-blue-600 hover:cursor-pointer";
 
-  const getTitle = () => {
-    switch (pathname) {
-      case "/team": {
-        return "Team";
-      }
-      case "/personal": {
-        return "Personal";
-      }
-      default: {
-        return "";
-      }
-    }
-  }
+const Subheader = () => {
+  const { pathname, state } = useLocation();
+  const { open } = useContext(DialogContext);
 
   const handleAddPersonalClick = () => {
     open("addPersonal", "Add Personal Card");
   }
 
-  const renderControls = () => {
+  const handleAddTeamCardClick = () => {
+    open("addTeamCard", `Add card to ${state?.boardName}`);
+  }
+
+  const renderContent = () => {
     if (pathname === "/personal") {
       return (
-        <div className="flex justify-end">
-          <a onClick={handleAddPersonalClick} className="font-sm text-sm text-blue-600 hover:cursor-pointer">+ Add Card to Personal board</a>
+        <div className="w-full flex justify-between items-center">
+          <span>Personal</span>
+          <a onClick={handleAddPersonalClick} className={linkClassName}>+ Add Card to Personal board</a>
+        </div>
+      );
+    }
+
+    if (pathname.includes("team")) {
+      return (
+        <div className="w-full flex justify-between items-center">
+          <span>{state?.boardName}</span>
+          <a onClick={handleAddTeamCardClick} className={linkClassName}>+ Add Card</a>
         </div>
       );
     }
@@ -41,14 +44,13 @@ const Subheader = () => {
     return null;
   }
 
-  if (!routes.includes(pathname)) {
+  if (NO_SUBHEADER_ROUTES.includes(pathname)) {
     return null;
   }
 
   return (
-    <div className="w-full border-b py-3 px-4 flex justify-between">
-      <div>{getTitle()}</div>
-      {renderControls()}
+    <div className="w-full border-b py-3 px-4">
+      {renderContent()}
     </div>
   );
 }

@@ -3,17 +3,21 @@ import { DialogContext } from "../DialogProvider";
 import AddCardForm from "../AddCardForm";
 import "./styles.css";
 import AddPersonalCardForm from "../AddPersonalCardForm";
+import AddBoardForm from "../AddBoardForm";
 
 const Dialog = () => {
   const { isOpen, close, metadata } = useContext(DialogContext);
 
   const renderDialogContent = () => {
     switch (metadata?.name) {
-      case 'addCard': {
+      case 'addTeamCard': {
         return <AddCardForm close={close} />;
       }
       case 'addPersonal': {
         return <AddPersonalCardForm close={close} />;
+      }
+      case 'addBoard': {
+        return <AddBoardForm close={close} />
       }
     }
     return null;

@@ -11,7 +11,7 @@ const Link: FC<Props> = ({ to, replace, children }) => {
     <RouterLink
       to={to}
       replace={replace}
-      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+      className="font-sm text-sm text-blue-600 hover:cursor-pointer hover:underline"
     >
       {children}
     </RouterLink>

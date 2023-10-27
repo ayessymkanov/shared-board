@@ -4,14 +4,16 @@ type Props = {
   children: ReactNode;
 }
 
+type DialogName = 'addTeamCard' | 'addPersonal' | 'addBoard';
+
 type Metadata = {
-  name?: string;
+  name?: DialogName;
   title?: string;
 }
 
 type DialogContextType = {
   isOpen: boolean;
-  open: (name: string, title: string) => void;
+  open: (name: DialogName, title: string) => void;
   close: () => void;
   metadata?: Metadata;
   setMetadata?: (meta: Metadata) => void;

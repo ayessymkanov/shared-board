@@ -12,10 +12,14 @@ const Team = () => {
     return <Navigate to="/" replace />;
   }
 
-  const className = classnames(`grid lg:grid-cols-3 gap-4 md:grid-cols-1`);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  const className = classnames(`grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4`);
 
   return (
-    <PageWrapper title={`${teamData.name} board`} loading={loading}>
+    <PageWrapper loading={loading}>
       <div className={className}>
         {Object.keys(teamData.columns).map((m) => (
           <TeamMemberColumn
