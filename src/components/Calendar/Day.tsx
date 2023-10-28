@@ -20,7 +20,7 @@ const Day: FC<Props> = ({ day, onClick, isActive }) => {
   });
 
   return (
-    <div className={className} onClick={() => onClick(day?.date)}>
+    <div className={className} onClick={() => day && onClick(day?.date)}>
       <span className={labelClassName}>
         {day?.day}
       </span>

@@ -14,6 +14,7 @@ export type Props = {
   onFocus?: (e: any) => void;
   onBlur?: (e: any) => void;
   autoComplete?: "off" | "on";
+  disabled?: boolean;
 };
 
 const Input = forwardRef<HTMLInputElement, Props>(({
@@ -28,12 +29,16 @@ const Input = forwardRef<HTMLInputElement, Props>(({
   onBlur,
   onFocus,
   autoComplete,
+  disabled,
 }, ref) => {
   const defaultClassName = "flex flex-col";
-  const inputClassName = `
+  const inputClassName = classnames(`
     bg-gray-50 border border-gray-300 text-gray-900 text-sm 
     rounded-lg focus:ring-blue-500 focus:border-blue-500 
-    block w-full p-2.5`;
+    block w-full p-2.5
+`, {
+    "cursor-not-allowed text-gray-300": disabled
+  })
   return (
     <div className={classnames(defaultClassName, className)}>
       <div className="flex items-baseline justify-between gap-3">
@@ -52,7 +57,8 @@ const Input = forwardRef<HTMLInputElement, Props>(({
         ref={ref}
         onFocus={onFocus}
         onBlur={onBlur}
-        autoComplete={autoComplete}
+        autoComplete="off"
+        disabled={disabled}
       />
     </div>
   );

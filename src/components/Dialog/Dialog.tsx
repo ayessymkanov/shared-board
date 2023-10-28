@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useLocation } from "react-router-dom";
 import { DialogContext } from "../DialogProvider";
 import AddCardForm from "../AddCardForm";
 import "./styles.css";
@@ -7,11 +8,13 @@ import AddBoardForm from "../AddBoardForm";
 
 const Dialog = () => {
   const { isOpen, close, metadata } = useContext(DialogContext);
+  const location = useLocation();
 
   const renderDialogContent = () => {
     switch (metadata?.name) {
       case 'addTeamCard': {
-        return <AddCardForm close={close} />;
+        const teamId = location.pathname.split("/").pop();
+        return <AddCardForm close={close} initialValues={{ team: teamId }} />;
       }
       case 'addPersonal': {
         return <AddPersonalCardForm close={close} />;

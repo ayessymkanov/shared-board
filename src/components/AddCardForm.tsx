@@ -1,11 +1,12 @@
 import { FC, useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useMutation, gql as GQL, useQuery } from "@apollo/client";
 import { Form, Formik, Field, FieldProps } from "formik";
 import * as Yup from "yup";
 import { gql } from "../__generated__";
 import Button from "./Button";
 import Input from "./Input";
 import Datepicker from "./Datepicker";
+import SelectInput from "./SelectInput";
 
 type FormValues = {
   title: string;
@@ -25,6 +26,10 @@ const ADD_CARD = gql(`
   }
 `);
 
+// const TEAM_MEMBERS = GQL`
+//
+// `
+
 const validationSchema = Yup.object().shape({
   title: Yup.string()
     .min(2, 'Too Short!')
@@ -40,13 +45,14 @@ const validationSchema = Yup.object().shape({
 const AddCardForm: FC<Props> = ({ close, initialValues }) => {
   const [addCard, { error, client }] = useMutation(ADD_CARD);
   const [formError, setFormError] = useState("");
+  console.log({ initialValues })
   const handleSubmit = async (values: FormValues) => {
     try {
       await addCard({
         variables: {
           input: {
             title: values.title,
-            assigneeId: 4,
+            assigneeId: Number(values.assignee),
             teamId: Number(values.team),
             dueDateTime: new Date(values.date).toISOString(),
           }
@@ -97,7 +103,7 @@ const AddCardForm: FC<Props> = ({ close, initialValues }) => {
             name="assignee"
           >
             {({ field }: FieldProps) => (
-              <Input
+              <SelectInput
                 value={field.value as string}
                 onChange={field.onChange}
                 label="Assignee"
@@ -120,6 +126,7 @@ const AddCardForm: FC<Props> = ({ close, initialValues }) => {
                 type="text"
                 placeholder="Avengers"
                 error={touched.team ? errors.team : ""}
+                disabled={!!initialValues.team}
               />
             )}
           </Field>

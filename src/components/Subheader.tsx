@@ -22,6 +22,10 @@ const Subheader = () => {
     open("addTeamCard", `Add card to ${state?.boardName}`);
   }
 
+  const handleInvite = () => {
+    open("invite", "Invite a Member");
+  }
+
   const renderContent = () => {
     if (pathname === "/personal") {
       return (
@@ -36,7 +40,10 @@ const Subheader = () => {
       return (
         <div className="w-full flex justify-between items-center">
           <span>{state?.boardName}</span>
-          <a onClick={handleAddTeamCardClick} className={linkClassName}>+ Add Card</a>
+          <div className="flex gap-2">
+            {/* <a onClick={handleAddTeamCardClick} className={linkClassName}>+ Add Card</a> */}
+            {/* <a onClick={handleInvite} className={linkClassName}>+ Invite a Member</a> */}
+          </div>
         </div>
       );
     }

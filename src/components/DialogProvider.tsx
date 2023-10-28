@@ -4,7 +4,7 @@ type Props = {
   children: ReactNode;
 }
 
-type DialogName = 'addTeamCard' | 'addPersonal' | 'addBoard';
+type DialogName = "addTeamCard" | "addPersonal" | "addBoard" | "invite";
 
 type Metadata = {
   name?: DialogName;
