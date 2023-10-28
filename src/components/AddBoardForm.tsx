@@ -70,7 +70,7 @@ const AddBoardForm: FC<Props> = ({ close }) => {
                 name="name"
                 type="text"
                 placeholder="Avengers"
-                error={touched.name ? errors.name[0] : ""}
+                error={touched.name ? errors.name as string : ""}
               />
             )}
           </Field>

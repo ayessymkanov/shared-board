@@ -41,8 +41,8 @@ const Subheader = () => {
         <div className="w-full flex justify-between items-center">
           <span>{state?.boardName}</span>
           <div className="flex gap-2">
-            {/* <a onClick={handleAddTeamCardClick} className={linkClassName}>+ Add Card</a> */}
-            {/* <a onClick={handleInvite} className={linkClassName}>+ Invite a Member</a> */}
+            <a onClick={handleAddTeamCardClick} className={linkClassName}>+ Add Card</a>
+            <a onClick={handleInvite} className={linkClassName}>+ Invite a Member</a>
           </div>
         </div>
       );

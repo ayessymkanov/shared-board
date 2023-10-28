@@ -2,7 +2,7 @@ import { FC } from "react";
 import type { Option } from "./SelectInput";
 type Props = {
   options: Option[];
-  loading: boolean;
+  loading?: boolean;
   onSelect: (option: Option) => void;
 }
 const Options: FC<Props> = ({ options, loading, onSelect }) => {

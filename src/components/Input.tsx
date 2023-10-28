@@ -28,7 +28,6 @@ const Input = forwardRef<HTMLInputElement, Props>(({
   placeholder,
   onBlur,
   onFocus,
-  autoComplete,
   disabled,
 }, ref) => {
   const defaultClassName = "flex flex-col";

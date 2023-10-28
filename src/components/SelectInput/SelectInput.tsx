@@ -7,8 +7,8 @@ export type Option = {
   value: string | number;
   label: string;
 }
-type Props = Partial<InputProps> & {
-  options?: Option[];
+type Props = InputProps & {
+  options: Option[];
   loading?: boolean;
 }
 
@@ -33,10 +33,11 @@ const SelectInput: FC<Props> = ({
     setIsPopupOpen(true);
   }
 
-  const handleOnChange = (value: string) => {
-    // setValue(value);
-    setIsPopupOpen(false);
-  }
+  // const handleOnChange = (value: string) => {
+  //   // setValue(value);
+  //   console.log(value);
+  //   setIsPopupOpen(false);
+  // }
 
   const handleSelect = (option: Option) => {
     console.log(option);
@@ -57,7 +58,13 @@ const SelectInput: FC<Props> = ({
         placeholder={placeholder}
         error={error}
       />
-      <Popup parentRef={ref} isOpen={isPopupOpen}><Options options={options} loading={loading} onSelect={handleSelect} /></Popup>
+      <Popup parentRef={ref} isOpen={isPopupOpen}>
+        <Options
+          options={options}
+          loading={loading}
+          onSelect={handleSelect}
+        />
+      </Popup>
     </div>
   );
 }

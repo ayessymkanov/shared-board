@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { useMutation, gql as GQL, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { Form, Formik, Field, FieldProps } from "formik";
 import * as Yup from "yup";
 import { gql } from "../__generated__";
@@ -25,10 +25,6 @@ const ADD_CARD = gql(`
     addCard(input: $input)
   }
 `);
-
-// const TEAM_MEMBERS = GQL`
-//
-// `
 
 const validationSchema = Yup.object().shape({
   title: Yup.string()
@@ -111,6 +107,7 @@ const AddCardForm: FC<Props> = ({ close, initialValues }) => {
                 type="text"
                 placeholder="ironman@avengers.com"
                 error={touched.assignee ? errors.assignee : ""}
+                options={[]}
               />
             )}
           </Field>
@@ -126,7 +123,7 @@ const AddCardForm: FC<Props> = ({ close, initialValues }) => {
                 type="text"
                 placeholder="Avengers"
                 error={touched.team ? errors.team : ""}
-                disabled={!!initialValues.team}
+                disabled={!!initialValues?.team}
               />
             )}
           </Field>
