@@ -51,7 +51,7 @@ const validationSchema = Yup.object().shape({
 const AddCardForm: FC<Props> = ({ close, initialValues }) => {
   const [addCard, { error, client }] = useMutation(ADD_CARD);
   const { data: team } = useQuery(TEAM_MEMBERS, {
-    skip: !initialValues.team,
+    skip: !initialValues?.team,
     variables: {
       teamId: Number(initialValues?.team ?? 0)
     }
@@ -89,7 +89,7 @@ const AddCardForm: FC<Props> = ({ close, initialValues }) => {
       validationSchema={validationSchema}
       initialValues={{
         title: initialValues?.title ?? '',
-        assignee: initialValues?.assignee ?? {},
+        assignee: initialValues?.assignee ?? { label: '', value: 0 },
         date: initialValues?.date ?? '',
         team: initialValues?.team ?? '',
       }}
@@ -121,11 +121,11 @@ const AddCardForm: FC<Props> = ({ close, initialValues }) => {
                 type="text"
                 placeholder="ironman@avengers.com"
                 // error={touched.assignee ? errors.assignee : ""}
-                options={team?.teamMembers.map((member) => ({ label: `${member.name} | ${member.email}`, value: member.id }))}
+                options={team?.teamMembers.map((member) => ({ label: `${member.name} | ${member.email}`, value: member.id })) ?? []}
               />
             )}
           </Field>
-          {!initialValues.team && (
+          {!initialValues?.team && (
             <Field name="team">
               {({ field }: FieldProps) => (
                 <Input

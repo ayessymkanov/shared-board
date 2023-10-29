@@ -21,9 +21,6 @@ const Datepicker: FC<Props> = ({
 }) => {
   const ref = useRef<HTMLInputElement>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const handleBlur = () => {
-    // setIsPopupOpen(false);
-  }
   const handleFocus = () => {
     setIsPopupOpen(true);
   }
@@ -38,7 +35,6 @@ const Datepicker: FC<Props> = ({
         ref={ref}
         type={type}
         onChange={onChange}
-        onBlur={handleBlur}
         onFocus={handleFocus}
         name={name}
         label={label}
@@ -47,7 +43,7 @@ const Datepicker: FC<Props> = ({
         placeholder={placeholder}
         error={error}
       />
-      <Popup parentRef={ref} isOpen={isPopupOpen}><EmbededCalendar onChange={handleOnChange} /></Popup>
+      <Popup parentRef={ref} isOpen={isPopupOpen} close={() => setIsPopupOpen(false)}><EmbededCalendar onChange={handleOnChange} /></Popup>
     </div>
   );
 }

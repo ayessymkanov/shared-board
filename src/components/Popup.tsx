@@ -6,10 +6,10 @@ type Props = {
   children: ReactNode;
   parentRef: RefObject<HTMLElement | HTMLInputElement>;
   isOpen: boolean;
-  close?: () => void;
+  close: () => void;
 }
 
-const Popup: FC<Props> = ({ children, parentRef, isOpen, close }) => {
+const Popup: FC<Props> = ({ children, parentRef, isOpen }) => {
   const ref = useRef(null);
   useOnClickOutside(ref, close);
 

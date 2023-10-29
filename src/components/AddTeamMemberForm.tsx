@@ -1,4 +1,4 @@
-import { Formik, Form, Field, FormikValues } from "formik"
+import { Formik, Form, Field, FormikValues, FieldProps } from "formik"
 import * as Yup from "yup";
 import Input from "./Input";
 import { FC } from "react";
@@ -50,14 +50,14 @@ const AddTeamMemberForm: FC<Props> = ({ close }) => {
     <Formik
       validationSchema={validationSchema}
       initialValues={{
-        name: ''
+        email: ''
       }}
       onSubmit={handleSubmit}
     >
       {({ errors, touched, isSubmitting }) => (
         <Form className="flex flex-col gap-2">
           <Field name="email">
-            {({ field }) => (
+            {({ field }: FieldProps) => (
               <Input
                 value={field.value}
                 onChange={field.onChange}
@@ -65,7 +65,7 @@ const AddTeamMemberForm: FC<Props> = ({ close }) => {
                 name="email"
                 type="email"
                 placeholder="ironman@avengers.com"
-                error={touched.name ? errors.email as string : ""}
+                error={touched.email ? errors.email as string : ""}
               />
             )}
           </Field>
