@@ -1,16 +1,17 @@
 import classNames from "classnames";
-import { FC, ReactNode, RefObject } from "react";
+import { useOnClickOutside } from "usehooks-ts";
+import { FC, ReactNode, RefObject, useRef } from "react";
 
 type Props = {
   children: ReactNode;
   parentRef: RefObject<HTMLElement | HTMLInputElement>;
   isOpen: boolean;
+  close?: () => void;
 }
 
-const Popup: FC<Props> = ({ children, parentRef, isOpen }) => {
-  const className = classNames("absolute bg-white p-2 rounded shadow-md border", {
-    "hidden": !isOpen,
-  });
+const Popup: FC<Props> = ({ children, parentRef, isOpen, close }) => {
+  const ref = useRef(null);
+  useOnClickOutside(ref, close);
 
   const getTop = () => {
     const dimensions = parentRef?.current?.getBoundingClientRect();
@@ -30,8 +31,12 @@ const Popup: FC<Props> = ({ children, parentRef, isOpen }) => {
     return 0;
   }
 
+  const className = classNames("absolute z-10 bg-white rounded shadow-md border", {
+    "hidden": !isOpen,
+  });
+
   return (
-    <div className={className} style={{ top: getTop(), width: getWidth() }}>{children}</div>
+    <div ref={ref} className={className} style={{ top: getTop(), width: getWidth() }}>{children}</div>
   );
 }
 

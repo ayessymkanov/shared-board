@@ -8,8 +8,10 @@ export type Option = {
   label: string;
 }
 type Props = InputProps & {
+  value: Option;
   options: Option[];
   loading?: boolean;
+  onSetValue: (value: Option) => void;
 }
 
 const SelectInput: FC<Props> = ({
@@ -22,25 +24,20 @@ const SelectInput: FC<Props> = ({
   value,
   options,
   loading,
+  onSetValue
 }) => {
   const ref = useRef<HTMLInputElement>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const handleBlur = () => {
-    setIsPopupOpen(false);
-  }
   const handleFocus = () => {
     setIsPopupOpen(true);
   }
 
-  // const handleOnChange = (value: string) => {
-  //   // setValue(value);
-  //   console.log(value);
-  //   setIsPopupOpen(false);
-  // }
 
   const handleSelect = (option: Option) => {
-    console.log(option);
+    console.log({ option });
+    onSetValue(option);
+    setIsPopupOpen(false);
   }
 
   return (
@@ -49,16 +46,15 @@ const SelectInput: FC<Props> = ({
         ref={ref}
         type="text"
         onChange={onChange}
-        onBlur={handleBlur}
         onFocus={handleFocus}
         name={name}
         label={label}
-        value={value}
+        value={value?.label}
         className={className}
         placeholder={placeholder}
         error={error}
       />
-      <Popup parentRef={ref} isOpen={isPopupOpen}>
+      <Popup parentRef={ref} isOpen={isPopupOpen} close={() => setIsPopupOpen(false)}>
         <Options
           options={options}
           loading={loading}

@@ -5,6 +5,7 @@ import AddCardForm from "../AddCardForm";
 import "./styles.css";
 import AddPersonalCardForm from "../AddPersonalCardForm";
 import AddBoardForm from "../AddBoardForm";
+import AddTeamMemberForm from "../AddTeamMemberForm";
 
 const Dialog = () => {
   const { isOpen, close, metadata } = useContext(DialogContext);
@@ -22,8 +23,10 @@ const Dialog = () => {
       case 'addBoard': {
         return <AddBoardForm close={close} />
       }
+      case 'invite': {
+        return <AddTeamMemberForm close={close} />
+      }
     }
-    return null;
   }
 
   return (

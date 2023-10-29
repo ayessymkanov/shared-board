@@ -59,7 +59,7 @@ const EmbededCalendar: FC<Props> = ({ onChange }) => {
 
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col p-2">
       <CalendarControls currentDate={currentDate} onNext={handleNext} onPrev={handlePrev} />
       <div className="flex">
         {weekDays.map((day) => <div key={day} className="basis-1 grow text-xs text-center">{day}</div>)}

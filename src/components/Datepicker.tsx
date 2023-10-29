@@ -33,7 +33,7 @@ const Datepicker: FC<Props> = ({
     setIsPopupOpen(false);
   }
   return (
-    <div className="flex flex-col relative">
+    <div className="flex flex-col relative z-1">
       <Input
         ref={ref}
         type={type}

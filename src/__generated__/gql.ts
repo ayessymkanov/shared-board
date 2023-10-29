@@ -15,6 +15,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  mutation AddTeam($input: AddTeamInput!) {\n    addTeam(input: $input) {\n      name\n      id\n    }\n  }\n": types.AddTeamDocument,
     "\n  mutation AddCard($input: AddCardInput!) {\n    addCard(input: $input)\n  }\n": types.AddCardDocument,
+    "\n  query TeamMembers($teamId: Int!) {\n    teamMembers(id: $teamId) {\n      name\n      id\n      email\n    }\n  }\n": types.TeamMembersDocument,
+    "\n  mutation AddTeamMember($input: AddTeamMemberInput!) {\n    addTeamMember(input: $input)\n  }\n": types.AddTeamMemberDocument,
     "\n  query Me{\n    me {\n      name\n      email\n      id\n      personalBoardId\n    }\n  }\n": types.MeDocument,
     "\n  query Teams {\n    teams {\n      name\n      id\n    }\n  }\n": types.TeamsDocument,
     "\n  query GetCards($input: CardsFilterInput) {\n    cards(input: $input) {\n      dueDateTime\n      title\n      status\n      id\n      teamId\n      team {\n        name \n      }\n    }\n  }\n": types.GetCardsDocument,
@@ -46,6 +48,14 @@ export function gql(source: "\n  mutation AddTeam($input: AddTeamInput!) {\n    
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation AddCard($input: AddCardInput!) {\n    addCard(input: $input)\n  }\n"): (typeof documents)["\n  mutation AddCard($input: AddCardInput!) {\n    addCard(input: $input)\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query TeamMembers($teamId: Int!) {\n    teamMembers(id: $teamId) {\n      name\n      id\n      email\n    }\n  }\n"): (typeof documents)["\n  query TeamMembers($teamId: Int!) {\n    teamMembers(id: $teamId) {\n      name\n      id\n      email\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation AddTeamMember($input: AddTeamMemberInput!) {\n    addTeamMember(input: $input)\n  }\n"): (typeof documents)["\n  mutation AddTeamMember($input: AddTeamMemberInput!) {\n    addTeamMember(input: $input)\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
