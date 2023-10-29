@@ -85,7 +85,6 @@ const Signin = () => {
                   label="Email"
                   name="email"
                   type="email"
-                  placeholder="Avengers"
                   error={touched.email ? errors.email as string : ""}
                 />
               )}
