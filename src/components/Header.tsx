@@ -4,6 +4,7 @@ import { AuthContext } from "./AuthProvider";
 import HamburgerMenu from "./HamburgerMenu";
 import { DialogContext } from "./DialogProvider";
 import Link from "./Link";
+import client from "../apolloClient";
 
 type Props = {
   toggleSidebar: () => void;
@@ -22,6 +23,7 @@ const Header: FC<Props> = ({ toggleSidebar }) => {
   const handleLogout = async () => {
     localStorage.clear();
     setIsAuthenticated(false);
+    await client.resetStore();
     navigate("/signin");
   };
 

@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react";
-import { useMutation } from "@apollo/client";
 import { Navigate } from "react-router-dom";
 import { Formik, Form, Field, FieldProps, FormikValues } from "formik";
 import * as Yup from "yup";
@@ -7,13 +6,7 @@ import { AuthContext } from "../components/AuthProvider";
 import Input from "../components/Input";
 import Link from "../components/Link";
 import Button from "../components/Button";
-import { gql } from "../__generated__";
-
-const LOGIN = gql(`
-  mutation Login($input: LoginInput) {
-    login(input: $input)
-  }
-`);
+import usePostRequest from "../utils/usePostRequest";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -24,7 +17,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const Signin = () => {
-  const [login, { error, client }] = useMutation(LOGIN);
+  const [login, { error, data }] = usePostRequest('signin');
   const {
     refetchMe,
     isAuthenticated,
@@ -32,25 +25,21 @@ const Signin = () => {
   } = useContext(AuthContext);
 
   useEffect(() => {
-    (async function() {
-      await client.clearStore();
-    })();
-  }, []);
-
-  const handleSubmit = async ({ email, password }: FormikValues) => {
-    try {
-      await client.clearStore();
-      const loginData = await login({
-        variables: { input: { email, password } },
-      });
-      localStorage.setItem("token", loginData.data?.login ?? "");
+    localStorage.setItem("token", data?.token);
+    (async () => {
       if (refetchMe) {
         const { data } = await refetchMe();
         const isAuthenticated = !!data?.me?.email;
         setIsAuthenticated(isAuthenticated);
       }
+    })();
+  }, [data]);
+
+  const handleSubmit = async ({ email, password }: FormikValues) => {
+    try {
+      await login({ email, password })
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 
