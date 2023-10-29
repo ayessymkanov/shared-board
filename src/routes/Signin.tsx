@@ -1,8 +1,9 @@
-import { FormEvent, useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { Navigate } from "react-router-dom";
+import { Formik, Form, Field, FieldProps, FormikValues } from "formik";
+import * as Yup from "yup";
 import { AuthContext } from "../components/AuthProvider";
-import { validate } from "../utils/validation";
 import Input from "../components/Input";
 import Link from "../components/Link";
 import Button from "../components/Button";
@@ -14,16 +15,21 @@ const LOGIN = gql(`
   }
 `);
 
+const validationSchema = Yup.object().shape({
+  email: Yup.string()
+    .email()
+    .required('Email is required'),
+  password: Yup.string()
+    .required('Password is required'),
+});
+
 const Signin = () => {
-  const [login, { loading, error, client }] = useMutation(LOGIN);
+  const [login, { error, client }] = useMutation(LOGIN);
   const {
     refetchMe,
     isAuthenticated,
     setIsAuthenticated = () => { },
   } = useContext(AuthContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     (async function() {
@@ -31,16 +37,7 @@ const Signin = () => {
     })();
   }, []);
 
-  const handleLogin = async (e: FormEvent) => {
-    e.preventDefault();
-    setFormErrors({});
-    const errors = validate({
-      email,
-      password,
-    });
-    if (Object.keys(errors).length > 0) {
-      return setFormErrors(errors);
-    }
+  const handleSubmit = async ({ email, password }: FormikValues) => {
     try {
       await client.clearStore();
       const loginData = await login({
@@ -55,7 +52,7 @@ const Signin = () => {
     } catch (err) {
       console.log(err);
     }
-  };
+  }
 
   if (isAuthenticated) {
     return <Navigate to="/" replace />;
@@ -70,28 +67,46 @@ const Signin = () => {
           Create an account
         </Link>
       </p>
-      <p className="text-red-400 my-3">{error?.message}</p>
-      <form onSubmit={handleLogin} noValidate className="flex flex-col my-4">
-        <Input
-          name="email"
-          type="email"
-          label="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          error={formErrors.email}
-          className="mb-4"
-        />
-        <Input
-          name="password"
-          type="password"
-          label="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          error={formErrors.password}
-          className="mb-4"
-        />
-        <Button isSubmit>{loading ? "Loading..." : "Sign in"}</Button>
-      </form>
+      <Formik
+        validationSchema={validationSchema}
+        initialValues={{
+          email: '',
+          password: ''
+        }}
+        onSubmit={handleSubmit}
+      >
+        {({ errors, touched, isSubmitting }) => (
+          <Form className="flex flex-col gap-2" noValidate>
+            <Field name="email">
+              {({ field }: FieldProps) => (
+                <Input
+                  value={field.value}
+                  onChange={field.onChange}
+                  label="Email"
+                  name="email"
+                  type="email"
+                  placeholder="Avengers"
+                  error={touched.email ? errors.email as string : ""}
+                />
+              )}
+            </Field>
+            <Field name="password">
+              {({ field }: FieldProps) => (
+                <Input
+                  value={field.value}
+                  onChange={field.onChange}
+                  label="Password"
+                  name="password"
+                  type="password"
+                  error={touched.password ? errors.password as string : ""}
+                />
+              )}
+            </Field>
+            <p className="text-sm text-red-400 my-1">{error?.message}</p>
+            <Button isSubmit>{isSubmitting ? "Loading..." : "Sign in"}</Button>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };

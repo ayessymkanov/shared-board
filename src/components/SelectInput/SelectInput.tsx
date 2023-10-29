@@ -33,9 +33,7 @@ const SelectInput: FC<Props> = ({
     setIsPopupOpen(true);
   }
 
-
   const handleSelect = (option: Option) => {
-    console.log({ option });
     onSetValue(option);
     setIsPopupOpen(false);
   }
