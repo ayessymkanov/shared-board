@@ -11,13 +11,15 @@ import classNames from "classnames";
 const Personal = () => {
   const matchesSmall = useMediaQuery('(max-width: 767px)');
   const { user } = useContext(AuthContext);
-  const { data, loading } = useQuery(TEAM, {
+  const { data, loading, error } = useQuery(TEAM, {
     skip: !user?.personalBoardId,
     variables: {
       id: user?.personalBoardId ?? 0,
     },
     fetchPolicy: "no-cache",
   });
+
+  console.log({ error })
 
   const renderCards = () => {
     if (data?.team?.cards.length === 0) {

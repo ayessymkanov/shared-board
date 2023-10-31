@@ -3,9 +3,10 @@ import { useLocation } from "react-router-dom";
 import { DialogContext } from "./DialogProvider";
 
 const NO_SUBHEADER_ROUTES = [
-  "/",
-  "/signin",
-  "/join"
+  "",
+  "signin",
+  "join",
+  "verify"
 ];
 
 const linkClassName = "font-sm text-sm text-blue-600 hover:cursor-pointer";
@@ -51,7 +52,7 @@ const Subheader = () => {
     return null;
   }
 
-  if (NO_SUBHEADER_ROUTES.includes(pathname)) {
+  if (NO_SUBHEADER_ROUTES.includes(pathname.split('/')[0])) {
     return null;
   }
 

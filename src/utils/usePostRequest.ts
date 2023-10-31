@@ -6,13 +6,14 @@ type Error = {
 
 type Data = Record<string, any>;
 
-type Path = "signin" | "signup";
+type Path = "signin" | "signup" | "verify";
 
 const apiUrl = import.meta.env.VITE_AUTH_API_URL;
 
 const url: Record<Path, string> = {
   signin: `${apiUrl}/signin`,
   signup: `${apiUrl}/signup`,
+  verify: `${apiUrl}/verify`,
 }
 
 export default (path: Path) => {

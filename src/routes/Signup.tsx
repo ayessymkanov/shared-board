@@ -17,6 +17,8 @@ const validationSchema = Yup.object().shape({
     .required('Name is required'),
 });
 
+const containerClassname = "w-full max-w-sm py-4 mx-auto my-auto min-w-min md:py-9 md:w-7/12";
+
 const Signup = () => {
   const {
     setIsAuthenticated = () => { },
@@ -48,8 +50,16 @@ const Signup = () => {
     return <Navigate to="/" replace />;
   }
 
+  if (data) {
+    return (
+      <div className={containerClassname}>
+        <div>Nice! Please check your inbox to confirm your email address</div>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full max-w-sm py-4 mx-auto my-auto min-w-min md:py-9 md:w-7/12">
+    <div className={containerClassname}>
       <h2 className="text-xl font-semibold md:text-2xl mb-4">Sign up</h2>
       <Formik
         validationSchema={validationSchema}
