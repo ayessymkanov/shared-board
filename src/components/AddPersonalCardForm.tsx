@@ -26,7 +26,7 @@ const ADD_CARD = gql(`
 const validationSchema = object().shape({
   title: string()
     .required('Title is required'),
-  date: string().required('Date is required').matches(/^(0[1-9]|1[0-2])\-(0[1-9]|1\d|2\d|3[01])\-(19|20)\d{2}$/, "Date should follow MM-DD-YYYY format")
+  date: string().required('Date is required').matches(/^(0[1-9]|1[0-2])\-([1-9]|1\d|2\d|3[01])\-(19|20)\d{2}$/, "Date should follow MM-DD-YYYY format")
 });
 
 const AddPersonalCardForm: FC<Props> = ({ close }) => {
@@ -50,7 +50,7 @@ const AddPersonalCardForm: FC<Props> = ({ close }) => {
         return setFormError(error.message)
       }
       await client.refetchQueries({
-        include: ["Team"]
+        include: ["Team", "Cards"]
       });
       close();
       setFormError("");

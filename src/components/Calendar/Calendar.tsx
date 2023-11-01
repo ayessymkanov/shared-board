@@ -34,7 +34,7 @@ const WeekDays = () => {
 }
 
 const Calendar: FC<CalendarProps> = ({ onDayClick, activeDay }) => {
-  const { currentDate, month } = useCalendar();
+  const { currentDate, month } = useCalendar(undefined, true);
 
   const renderMonth = () => {
     return (
