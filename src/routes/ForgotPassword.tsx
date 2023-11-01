@@ -30,6 +30,8 @@ const ForgotPassword = () => {
   }
   return (
     <div className="w-full max-w-sm py-4 mx-auto my-auto min-w-min md:py-9 md:w-7/12">
+      <h2 className="text-xl font-semibold md:text-2xl mb-4">Restore password</h2>
+      <p className="text-sm mb-4 text-gray-500">Please provide an email you used for sign up</p>
       <Formik
         validationSchema={validationSchema}
         initialValues={{
