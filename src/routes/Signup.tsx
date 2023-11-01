@@ -28,7 +28,6 @@ const Signup = () => {
   const [signup, { data, error }] = usePostRequest('signup');
 
   useEffect(() => {
-    localStorage.setItem("token", data?.token ?? "");
     (async () => {
       if (refetchMe) {
         const { data } = await refetchMe();

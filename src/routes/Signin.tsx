@@ -25,7 +25,6 @@ const Signin = () => {
   } = useContext(AuthContext);
 
   useEffect(() => {
-    localStorage.setItem("token", data?.token);
     (async () => {
       if (refetchMe) {
         const { data } = await refetchMe();
