@@ -10,7 +10,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const NO_SIDEBAR_ROUTES = ["/signin", "/join"];
+const NO_SIDEBAR_ROUTES = ["signin", "join", "verify"];
 
 const Layout: FC<Props> = ({ children }) => {
   const location = useLocation();
@@ -24,7 +24,7 @@ const Layout: FC<Props> = ({ children }) => {
     setIsSidebarOpen(false);
   }
 
-  const shouldRenderSidebar = !NO_SIDEBAR_ROUTES.includes(location.pathname);
+  const shouldRenderSidebar = !NO_SIDEBAR_ROUTES.includes(location.pathname.split('/')[0]);
   const renderSidebar = () => {
     if (shouldRenderSidebar) {
       return <Sidebar isOpen={isSidebarOpen} hideSidebar={hideSidebar} />;

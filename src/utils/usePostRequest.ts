@@ -6,13 +6,17 @@ type Error = {
 
 type Data = Record<string, any>;
 
-type Path = "signin" | "signup";
+type Path = "signin" | "signup" | "verify" | "forgot" | "reset" | "validateReset";
 
 const apiUrl = import.meta.env.VITE_AUTH_API_URL;
 
 const url: Record<Path, string> = {
   signin: `${apiUrl}/signin`,
   signup: `${apiUrl}/signup`,
+  verify: `${apiUrl}/verify`,
+  forgot: `${apiUrl}/forgot`,
+  reset: `${apiUrl}/reset`,
+  validateReset: `${apiUrl}/validate-reset`,
 }
 
 export default (path: Path) => {
@@ -43,7 +47,7 @@ export default (path: Path) => {
       }
 
     } catch (err) {
-      console.log(err);
+      setError(err as Error);
     } finally {
       setLoading(false);
     }

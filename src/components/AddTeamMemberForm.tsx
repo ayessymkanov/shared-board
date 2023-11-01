@@ -1,5 +1,5 @@
 import { Formik, Form, Field, FormikValues, FieldProps } from "formik"
-import * as Yup from "yup";
+import { object, string } from "yup";
 import Input from "./Input";
 import { FC } from "react";
 import Button from "./Button";
@@ -17,8 +17,8 @@ const ADD_TEAM_MEMBER = gql(`
   }
 `);
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string()
+const validationSchema = object().shape({
+  email: string()
     .email()
     .required('Name is required'),
 });

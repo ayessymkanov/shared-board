@@ -1,5 +1,5 @@
 import { Formik, Form, Field, FieldProps, FormikValues } from "formik"
-import * as Yup from "yup";
+import { object, string } from "yup";
 import Input from "./Input";
 import { FC } from "react";
 import Button from "./Button";
@@ -20,10 +20,10 @@ type Props = {
   close: () => void;
 }
 
-const validationSchema = Yup.object().shape({
-  name: Yup.string()
+const validationSchema = object().shape({
+  name: string()
     .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
+    .max(20, 'Too Long!')
     .required('Name is required'),
 });
 

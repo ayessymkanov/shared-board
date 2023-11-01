@@ -1,21 +1,23 @@
 import { useContext, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { Formik, Form, Field, FieldProps, FormikValues } from "formik";
-import * as Yup from "yup";
+import { object, string } from "yup";
 import { AuthContext } from "../components/AuthProvider";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import usePostRequest from "../utils/usePostRequest";
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string()
+const validationSchema = object().shape({
+  email: string()
     .email()
     .required('Email is required'),
-  password: Yup.string()
+  password: string()
     .required('Password is required'),
-  name: Yup.string()
+  name: string()
     .required('Name is required'),
 });
+
+const containerClassname = "w-full max-w-sm py-4 mx-auto my-auto min-w-min md:py-9 md:w-7/12";
 
 const Signup = () => {
   const {
@@ -48,8 +50,16 @@ const Signup = () => {
     return <Navigate to="/" replace />;
   }
 
+  if (data) {
+    return (
+      <div className={containerClassname}>
+        <div>Nice! Please check your inbox to confirm your email address</div>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full max-w-sm py-4 mx-auto my-auto min-w-min md:py-9 md:w-7/12">
+    <div className={containerClassname}>
       <h2 className="text-xl font-semibold md:text-2xl mb-4">Sign up</h2>
       <Formik
         validationSchema={validationSchema}
