@@ -10,7 +10,7 @@ type Props = {
 }
 
 const Popup: FC<Props> = ({ children, parentRef, isOpen }) => {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, close);
 
   const getTop = () => {

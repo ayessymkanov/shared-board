@@ -45,7 +45,7 @@ const validationSchema = object().shape({
   assignee: object()
     .required('Assignee is required'),
   team: string(),
-  date: string().required('Date is required').matches(/^(0[1-9]|1[0-2])\-([1-9]|1\d|2\d|3[01])\-(19|20)\d{2}$/, "Date should follow MM-DD-YYYY format")
+  date: string().required('Date is required').matches(/^(0[1-9]|1[0-2])\/([1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/, "Date should follow MM/DD/YYYY format")
 });
 
 const AddCardForm: FC<Props> = ({ close, initialValues }) => {

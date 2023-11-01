@@ -21,6 +21,7 @@ const Datepicker: FC<Props> = ({
 }) => {
   const ref = useRef<HTMLInputElement>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   const handleFocus = () => {
     setIsPopupOpen(true);
   }
@@ -29,6 +30,11 @@ const Datepicker: FC<Props> = ({
     setValue(value);
     setIsPopupOpen(false);
   }
+
+  const handleClose = () => {
+    setIsPopupOpen(false);
+  }
+
   return (
     <div className="flex flex-col relative z-1">
       <Input
@@ -43,7 +49,7 @@ const Datepicker: FC<Props> = ({
         placeholder={placeholder}
         error={error}
       />
-      <Popup parentRef={ref} isOpen={isPopupOpen} close={() => setIsPopupOpen(false)}><EmbededCalendar onChange={handleOnChange} /></Popup>
+      <Popup parentRef={ref} isOpen={isPopupOpen} close={handleClose}><EmbededCalendar onChange={handleOnChange} /></Popup>
     </div>
   );
 }

@@ -39,7 +39,7 @@ const EmbededCalendar: FC<Props> = ({ onChange }) => {
   }
 
   const handleDayClick = (day: number) => {
-    onChange(`${currentMonth}-${day}-${currentYear}`);
+    onChange(`${currentMonth}/${day}/${currentYear}`);
   }
 
   const renderDay = (day: Day, key: number) => {

@@ -26,7 +26,7 @@ const ADD_CARD = gql(`
 const validationSchema = object().shape({
   title: string()
     .required('Title is required'),
-  date: string().required('Date is required').matches(/^(0[1-9]|1[0-2])\-([1-9]|1\d|2\d|3[01])\-(19|20)\d{2}$/, "Date should follow MM-DD-YYYY format")
+  date: string().required('Date is required').matches(/^(0[1-9]|1[0-2])\/([1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/, "Date should follow MM/DD/YYYY format")
 });
 
 const AddPersonalCardForm: FC<Props> = ({ close }) => {
@@ -35,6 +35,7 @@ const AddPersonalCardForm: FC<Props> = ({ close }) => {
   const { user } = useContext(AuthContext);
 
   const handleSubmit = async (values: FormValues) => {
+    console.log(values.date)
     try {
       await addCard({
         variables: {
