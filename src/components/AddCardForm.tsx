@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { Form, Formik, Field, FieldProps } from "formik";
-import * as Yup from "yup";
+import { object, string } from "yup";
 import { gql } from "../__generated__";
 import Button from "./Button";
 import Input from "./Input";
@@ -37,15 +37,15 @@ const TEAM_MEMBERS = gql(`
   }
 `);
 
-const validationSchema = Yup.object().shape({
-  title: Yup.string()
+const validationSchema = object().shape({
+  title: string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Title is required'),
-  assignee: Yup.object()
+  assignee: object()
     .required('Assignee is required'),
-  team: Yup.string(),
-  date: Yup.string().required('Date is required').matches(/^(0[1-9]|1[0-2])\-(0[1-9]|1\d|2\d|3[01])\-(19|20)\d{2}$/, "Date should follow MM-DD-YYYY format")
+  team: string(),
+  date: string().required('Date is required').matches(/^(0[1-9]|1[0-2])\-([1-9]|1\d|2\d|3[01])\-(19|20)\d{2}$/, "Date should follow MM-DD-YYYY format")
 });
 
 const AddCardForm: FC<Props> = ({ close, initialValues }) => {

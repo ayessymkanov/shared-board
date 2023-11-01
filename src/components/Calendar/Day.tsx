@@ -15,15 +15,16 @@ const Day: FC<Props> = ({ day, onClick, isActive }) => {
     "bg-gray-100": day?.isWeekend,
     "bg-blue-300 hover:bg-blue-300": isActive,
   });
-  const labelClassName = classNames("rounded-full p-1", {
+  const labelClassName = classNames(
+    "rounded-full w-6 h-6 text-center flex items-center justify-center", {
     "bg-blue-700 text-white": day?.isToday,
   });
 
   return (
     <div className={className} onClick={() => day && onClick(day?.date)}>
-      <span className={labelClassName}>
+      <div className={labelClassName}>
         {day?.day}
-      </span>
+      </div>
     </div>
   );
 }

@@ -1,18 +1,22 @@
 import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { DialogContext } from "./DialogProvider";
+import { getCurrentRoute } from "../utils/routing";
 
 const NO_SUBHEADER_ROUTES = [
   "",
   "signin",
   "join",
-  "verify"
+  "verify",
+  "forgot",
+  "reset"
 ];
 
 const linkClassName = "font-sm text-sm text-blue-600 hover:cursor-pointer";
 
 const Subheader = () => {
-  const { pathname, state } = useLocation();
+  const location = useLocation();
+  const { pathname, state } = location;
   const { open } = useContext(DialogContext);
 
   const handleAddPersonalClick = () => {
@@ -52,7 +56,7 @@ const Subheader = () => {
     return null;
   }
 
-  if (NO_SUBHEADER_ROUTES.includes(pathname.split('/')[0])) {
+  if (NO_SUBHEADER_ROUTES.includes(getCurrentRoute(pathname))) {
     return null;
   }
 

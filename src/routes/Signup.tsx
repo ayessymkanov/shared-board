@@ -1,19 +1,19 @@
 import { useContext, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { Formik, Form, Field, FieldProps, FormikValues } from "formik";
-import * as Yup from "yup";
+import { object, string } from "yup";
 import { AuthContext } from "../components/AuthProvider";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import usePostRequest from "../utils/usePostRequest";
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string()
+const validationSchema = object().shape({
+  email: string()
     .email()
     .required('Email is required'),
-  password: Yup.string()
+  password: string()
     .required('Password is required'),
-  name: Yup.string()
+  name: string()
     .required('Name is required'),
 });
 

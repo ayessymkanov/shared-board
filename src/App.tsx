@@ -7,6 +7,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Team from "./routes/Team";
 import Personal from "./routes/Personal";
 import Verify from "./routes/Verify";
+import ForgotPassword from "./routes/ForgotPassword";
+import ResetPassword from "./routes/ResetPassword";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/join" element={<Signup />} />
         <Route path="/verify/:id" element={<Verify />} />
+        <Route path="/forgot" element={<ForgotPassword />} />
+        <Route path="/reset/:id" element={<ResetPassword />} />
         <Route path="*" element={<div>not found</div>} />
       </Routes>
     </Layout>

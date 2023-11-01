@@ -1,7 +1,7 @@
 import { FC, useContext, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { Form, Formik, Field, FieldProps } from "formik";
-import * as Yup from "yup";
+import { object, string } from "yup";
 import { gql } from "../__generated__";
 import Button from "./Button";
 import Input from "./Input";
@@ -23,12 +23,10 @@ const ADD_CARD = gql(`
   }
 `);
 
-const validationSchema = Yup.object().shape({
-  title: Yup.string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
+const validationSchema = object().shape({
+  title: string()
     .required('Title is required'),
-  date: Yup.string().required('Date is required').matches(/^(0[1-9]|1[0-2])\-(0[1-9]|1\d|2\d|3[01])\-(19|20)\d{2}$/, "Date should follow MM-DD-YYYY format")
+  date: string().required('Date is required').matches(/^(0[1-9]|1[0-2])\-(0[1-9]|1\d|2\d|3[01])\-(19|20)\d{2}$/, "Date should follow MM-DD-YYYY format")
 });
 
 const AddPersonalCardForm: FC<Props> = ({ close }) => {
@@ -72,9 +70,7 @@ const AddPersonalCardForm: FC<Props> = ({ close }) => {
     >
       {({ errors, touched, setFieldValue }) => (
         <Form className="flex flex-col gap-2">
-          <Field
-            name="title"
-          >
+          <Field name="title">
             {({ field }: FieldProps) => (
               <Input
                 value={field.value as string}
@@ -87,9 +83,7 @@ const AddPersonalCardForm: FC<Props> = ({ close }) => {
               />
             )}
           </Field>
-          <Field
-            name="date"
-          >
+          <Field name="date">
             {({ field }: FieldProps) => (
               <Datepicker
                 value={field.value}
