@@ -32,7 +32,7 @@ const Personal = () => {
 
     return (
       <div className={className}>
-        {data?.team?.cards.map((card) => <CardComponent isList={matchesSmall} card={card as Card} />)}
+        {data?.team?.cards.map((card) => <CardComponent key={card.id} isList={matchesSmall} card={card as Card} />)}
       </div>
     );
   }

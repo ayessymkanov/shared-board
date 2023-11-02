@@ -17,7 +17,7 @@ const Header: FC<Props> = ({ toggleSidebar }) => {
   const navigate = useNavigate();
 
   const handleNewBoard = () => {
-    open("addBoard", "Create a new Shared Board");
+    open({ name: "addBoard", title: "Create a new Shared Board" });
   }
 
   const handleLogout = async () => {

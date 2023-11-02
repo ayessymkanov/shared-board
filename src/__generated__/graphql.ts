@@ -18,6 +18,7 @@ export type Scalars = {
 
 export type AddCardInput = {
   assigneeId: Scalars['Int']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
   dueDateTime: Scalars['String']['input'];
   teamId: Scalars['Int']['input'];
   title: Scalars['String']['input'];
@@ -37,23 +38,14 @@ export type Card = {
   assignee: User;
   assigneeId: Scalars['Int']['output'];
   createdAt: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
   dueDateTime: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   status: Status;
   team: Team;
   teamId: Scalars['Int']['output'];
   title: Scalars['String']['output'];
-};
-
-export type CardRaw = {
-  __typename?: 'CardRaw';
-  assigneeId: Scalars['Int']['output'];
-  createdAt: Scalars['String']['output'];
-  dueDateTime: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  status: Status;
-  teamId: Scalars['Int']['output'];
-  title: Scalars['String']['output'];
+  updatedAt: Scalars['String']['output'];
 };
 
 export type CardsFilterInput = {
@@ -67,6 +59,7 @@ export type Mutation = {
   addCard: Scalars['String']['output'];
   addTeam: Team;
   addTeamMember: Scalars['String']['output'];
+  updateCard: Scalars['String']['output'];
 };
 
 
@@ -84,16 +77,22 @@ export type MutationAddTeamMemberArgs = {
   input: AddTeamMemberInput;
 };
 
+
+export type MutationUpdateCardArgs = {
+  id: Scalars['ID']['input'];
+  input?: InputMaybe<AddCardInput>;
+};
+
 export type Query = {
   __typename?: 'Query';
-  card?: Maybe<Card>;
+  card: Card;
   cards: Array<Card>;
   me: User;
-  team?: Maybe<Team>;
+  team: Team;
   teamMembers: Array<User>;
   teams: Array<Team>;
   today: Array<Maybe<Card>>;
-  user?: Maybe<User>;
+  user: User;
   userCards: Array<Card>;
   users: Array<User>;
 };
@@ -186,6 +185,13 @@ export type CardsQueryVariables = Exact<{
 
 export type CardsQuery = { __typename?: 'Query', cards: Array<{ __typename?: 'Card', title: string, dueDateTime: string }> };
 
+export type CardQueryVariables = Exact<{
+  cardId: Scalars['String']['input'];
+}>;
+
+
+export type CardQuery = { __typename?: 'Query', card: { __typename?: 'Card', id: string, title: string, description?: string | null, status: Status, dueDateTime: string, assignee: { __typename?: 'User', name: string, email: string, id: string } } };
+
 export type TeamsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -203,7 +209,7 @@ export type TeamQueryVariables = Exact<{
 }>;
 
 
-export type TeamQuery = { __typename?: 'Query', team?: { __typename?: 'Team', name: string, id: string, adminId: number, cards: Array<{ __typename?: 'Card', title: string, id: string, assigneeId: number, createdAt: string, teamId: number, status: Status, dueDateTime: string, assignee: { __typename?: 'User', name: string, email: string, id: string } }>, teamMembers: Array<{ __typename?: 'User', name: string, email: string, id: string }> } | null };
+export type TeamQuery = { __typename?: 'Query', team: { __typename?: 'Team', name: string, id: string, adminId: number, cards: Array<{ __typename?: 'Card', title: string, id: string, assigneeId: number, createdAt: string, teamId: number, status: Status, dueDateTime: string, assignee: { __typename?: 'User', name: string, email: string, id: string } }>, teamMembers: Array<{ __typename?: 'User', name: string, email: string, id: string }> } };
 
 export type TodayQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -217,6 +223,7 @@ export const TeamMembersDocument = {"kind":"Document","definitions":[{"kind":"Op
 export const AddTeamMemberDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddTeamMember"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AddTeamMemberInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addTeamMember"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<AddTeamMemberMutation, AddTeamMemberMutationVariables>;
 export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"personalBoardId"}}]}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
 export const CardsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Cards"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CardsFilterInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cards"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"dueDateTime"}}]}}]}}]} as unknown as DocumentNode<CardsQuery, CardsQueryVariables>;
+export const CardDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Card"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cardId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"card"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cardId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"dueDateTime"}},{"kind":"Field","name":{"kind":"Name","value":"assignee"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CardQuery, CardQueryVariables>;
 export const TeamsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Teams"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teams"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<TeamsQuery, TeamsQueryVariables>;
 export const GetCardsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCards"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CardsFilterInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cards"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dueDateTime"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"teamId"}},{"kind":"Field","name":{"kind":"Name","value":"team"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetCardsQuery, GetCardsQueryVariables>;
 export const TeamDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Team"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"team"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"adminId"}},{"kind":"Field","name":{"kind":"Name","value":"cards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"assigneeId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"teamId"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"dueDateTime"}},{"kind":"Field","name":{"kind":"Name","value":"assignee"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"teamMembers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<TeamQuery, TeamQueryVariables>;

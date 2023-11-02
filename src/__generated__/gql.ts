@@ -19,6 +19,7 @@ const documents = {
     "\n  mutation AddTeamMember($input: AddTeamMemberInput!) {\n    addTeamMember(input: $input)\n  }\n": types.AddTeamMemberDocument,
     "\n  query Me{\n    me {\n      name\n      email\n      id\n      personalBoardId\n    }\n  }\n": types.MeDocument,
     "\n  query Cards($input: CardsFilterInput) {\n    cards(input: $input) {\n      title\n      dueDateTime\n    }\n  }\n": types.CardsDocument,
+    "\n  query Card($cardId: String!) {\n    card(id: $cardId) {\n      id \n      title\n      description\n      status\n      dueDateTime\n      assignee {\n        name\n        email\n        id\n      }\n    }\n  }\n": types.CardDocument,
     "\n  query Teams {\n    teams {\n      name\n      id\n    }\n  }\n": types.TeamsDocument,
     "\n  query GetCards($input: CardsFilterInput) {\n    cards(input: $input) {\n      dueDateTime\n      title\n      status\n      id\n      teamId\n      team {\n        name \n      }\n    }\n  }\n": types.GetCardsDocument,
     "\n  query Team($id: Int!) {\n    team(id: $id) {\n      name\n      id\n      adminId\n      cards {\n        title\n        id\n        assigneeId\n        createdAt\n        teamId \n        status\n        dueDateTime\n        assignee {\n          name\n          email \n          id\n        }\n      }\n      teamMembers {\n        name\n        email\n        id\n      }\n    }\n  }\n": types.TeamDocument,
@@ -63,6 +64,10 @@ export function gql(source: "\n  query Me{\n    me {\n      name\n      email\n 
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query Cards($input: CardsFilterInput) {\n    cards(input: $input) {\n      title\n      dueDateTime\n    }\n  }\n"): (typeof documents)["\n  query Cards($input: CardsFilterInput) {\n    cards(input: $input) {\n      title\n      dueDateTime\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query Card($cardId: String!) {\n    card(id: $cardId) {\n      id \n      title\n      description\n      status\n      dueDateTime\n      assignee {\n        name\n        email\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  query Card($cardId: String!) {\n    card(id: $cardId) {\n      id \n      title\n      description\n      status\n      dueDateTime\n      assignee {\n        name\n        email\n        id\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

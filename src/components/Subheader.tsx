@@ -20,15 +20,15 @@ const Subheader = () => {
   const { open } = useContext(DialogContext);
 
   const handleAddPersonalClick = () => {
-    open("addPersonal", "Add Personal Card");
+    open({ name: "addPersonal", title: "Add Personal Card" });
   }
 
   const handleAddTeamCardClick = () => {
-    open("addTeamCard", `Add card to ${state?.boardName}`);
+    open({ name: "addTeamCard", title: `Add card to ${state?.boardName}` });
   }
 
   const handleInvite = () => {
-    open("invite", "Invite a Member");
+    open({ name: "invite", title: "Invite a Member" });
   }
 
   const renderContent = () => {
