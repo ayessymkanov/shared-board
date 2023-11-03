@@ -45,7 +45,7 @@ const Sidebar: FC<Props> = ({ isOpen, hideSidebar }) => {
 
   const handleAddNewBoard = () => {
     hideSidebar();
-    open("addBoard", "Create a new Shared Board");
+    open({ name: "addBoard", title: "Create a new Shared Board" });
   }
 
   const renderTeams = () => {
@@ -96,7 +96,7 @@ const Sidebar: FC<Props> = ({ isOpen, hideSidebar }) => {
         <span className="pl-2 text-base font-bold">Hello {user?.name}!</span>
         <ul className="w-full">
           {sidebarItems.map(({ to, title }) => (
-            <li onClick={hideSidebar}>
+            <li key={to} onClick={hideSidebar}>
               <Link to={to} replace className={itemClassName}>
                 {title}
               </Link>

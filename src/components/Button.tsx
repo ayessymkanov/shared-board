@@ -35,7 +35,7 @@ const Button: FC<Props> = ({
     return <input type="submit" value={children} className={className} />;
   }
   return (
-    <button className={className} onClick={onClick}>
+    <button className={className} type="button" onClick={onClick}>
       {children}
     </button>
   );

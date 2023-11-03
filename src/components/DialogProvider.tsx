@@ -4,16 +4,16 @@ type Props = {
   children: ReactNode;
 }
 
-type DialogName = "addTeamCard" | "addPersonal" | "addBoard" | "invite";
+type DialogName = "addTeamCard" | "addPersonal" | "addBoard" | "invite" | "openCard";
 
-type Metadata = {
+type Metadata = Record<string, any> & {
   name?: DialogName;
   title?: string;
 }
 
 type DialogContextType = {
   isOpen: boolean;
-  open: (name: DialogName, title: string) => void;
+  open: (metadata: Metadata) => void;
   close: () => void;
   metadata?: Metadata;
   setMetadata?: (meta: Metadata) => void;
@@ -29,8 +29,8 @@ const DialogProvider: FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [metadata, setMetadata] = useState({});
 
-  const open = (name: string, title: string) => {
-    setMetadata({ name, title });
+  const open = (metadata: Metadata) => {
+    setMetadata(metadata);
     setIsOpen(true);
   }
 

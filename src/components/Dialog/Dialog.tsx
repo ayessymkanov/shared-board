@@ -6,6 +6,8 @@ import "./styles.css";
 import AddPersonalCardForm from "../AddPersonalCardForm";
 import AddBoardForm from "../AddBoardForm";
 import AddTeamMemberForm from "../AddTeamMemberForm";
+import CardDetails from "../CardDetails";
+import classNames from "classnames";
 
 const Dialog = () => {
   const { isOpen, close, metadata } = useContext(DialogContext);
@@ -21,17 +23,24 @@ const Dialog = () => {
         return <AddPersonalCardForm close={close} />;
       }
       case 'addBoard': {
-        return <AddBoardForm close={close} />
+        return <AddBoardForm close={close} />;
       }
       case 'invite': {
-        return <AddTeamMemberForm close={close} />
+        return <AddTeamMemberForm close={close} />;
+      }
+      case 'openCard': {
+        return <CardDetails id={metadata.id} close={close} />;
       }
     }
   }
 
+  const className = classNames("absolute sm:top-20 w-11/12 sm:w-96 shadow-backdrop rounded", {
+    "sm:w-3/5 lg:w-1/2 xl:w-1/3": metadata?.name === 'openCard',
+  });
+
   return (
-    <dialog open={isOpen} className="absolute top-20 shadow-backdrop rounded">
-      <div className="relative border w-96 h-auto rounded">
+    <dialog open={isOpen} className={className}>
+      <div className="relative border  h-auto rounded">
         <header className="flex justify-between items-center border-b p-4">
           <span>{metadata?.title}</span>
           <button onClick={close} className="x-button" />

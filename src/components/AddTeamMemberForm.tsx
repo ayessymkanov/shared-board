@@ -64,7 +64,7 @@ const AddTeamMemberForm: FC<Props> = ({ close }) => {
                 label="Email"
                 name="email"
                 type="email"
-                placeholder="ironman@avengers.com"
+                placeholder="email@example.com"
                 error={touched.email ? errors.email as string : ""}
               />
             )}

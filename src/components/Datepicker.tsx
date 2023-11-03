@@ -18,17 +18,22 @@ const Datepicker: FC<Props> = ({
   error,
   placeholder,
   setValue,
+  editingMode = true,
 }) => {
   const ref = useRef<HTMLInputElement>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleFocus = () => {
-    setIsPopupOpen(true);
+    if (editingMode) {
+      setIsPopupOpen(true);
+    }
   }
 
   const handleOnChange = (value: string) => {
-    setValue(value);
-    setIsPopupOpen(false);
+    if (editingMode) {
+      setValue(value);
+      setIsPopupOpen(false);
+    }
   }
 
   const handleClose = () => {
@@ -48,6 +53,7 @@ const Datepicker: FC<Props> = ({
         className={className}
         placeholder={placeholder}
         error={error}
+        editingMode={editingMode}
       />
       <Popup parentRef={ref} isOpen={isPopupOpen} close={handleClose}><EmbededCalendar onChange={handleOnChange} /></Popup>
     </div>
