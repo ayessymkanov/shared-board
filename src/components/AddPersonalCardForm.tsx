@@ -14,6 +14,7 @@ type Props = {
 
 type FormValues = {
   title: string;
+  description: string;
   date: string;
 }
 
@@ -26,6 +27,8 @@ const ADD_CARD = gql(`
 const validationSchema = object().shape({
   title: string()
     .required('Title is required'),
+  description: string()
+    .max(200, 'Please keep description under 200 characters'),
   date: string().required('Date is required').matches(/^(0[1-9]|1[0-2])\/([1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/, "Date should follow MM/DD/YYYY format")
 });
 
@@ -35,7 +38,6 @@ const AddPersonalCardForm: FC<Props> = ({ close }) => {
   const { user } = useContext(AuthContext);
 
   const handleSubmit = async (values: FormValues) => {
-    console.log(values.date)
     try {
       await addCard({
         variables: {
@@ -44,6 +46,7 @@ const AddPersonalCardForm: FC<Props> = ({ close }) => {
             teamId: user?.personalBoardId ?? 0,
             assigneeId: Number(user?.id ?? 0),
             dueDateTime: new Date(values.date).toISOString(),
+            description: values.description,
           }
         }
       });
@@ -65,6 +68,7 @@ const AddPersonalCardForm: FC<Props> = ({ close }) => {
       validationSchema={validationSchema}
       initialValues={{
         title: '',
+        description: '',
         date: '',
       }}
       onSubmit={handleSubmit}
@@ -79,8 +83,21 @@ const AddPersonalCardForm: FC<Props> = ({ close }) => {
                 label="Title"
                 name="title"
                 type="text"
-                placeholder="Save Captain America"
+                placeholder="Add card title"
                 error={touched.title ? errors.title : ""}
+              />
+            )}
+          </Field>
+          <Field name="description">
+            {({ field }: FieldProps) => (
+              <Input
+                value={field.value as string}
+                onChange={field.onChange}
+                label="Description"
+                name="description"
+                type="textarea"
+                placeholder="Add card description"
+                error={touched.description ? errors.description : ""}
               />
             )}
           </Field>
@@ -93,7 +110,7 @@ const AddPersonalCardForm: FC<Props> = ({ close }) => {
                 label="Date"
                 name="date"
                 type="text"
-                placeholder="MM-DD-YYYY"
+                placeholder="MM/DD/YYYY"
                 autoComplete="off"
                 error={touched.date ? errors.date : ""}
               />

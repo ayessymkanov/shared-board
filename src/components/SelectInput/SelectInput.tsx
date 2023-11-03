@@ -24,18 +24,23 @@ const SelectInput: FC<Props> = ({
   value,
   options,
   loading,
-  onSetValue
+  onSetValue,
+  editingMode = true,
 }) => {
   const ref = useRef<HTMLInputElement>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleFocus = () => {
-    setIsPopupOpen(true);
+    if (editingMode) {
+      setIsPopupOpen(true);
+    }
   }
 
   const handleSelect = (option: Option) => {
-    onSetValue(option);
-    setIsPopupOpen(false);
+    if (editingMode) {
+      onSetValue(option);
+      setIsPopupOpen(false);
+    }
   }
 
   return (
@@ -51,6 +56,7 @@ const SelectInput: FC<Props> = ({
         className={className}
         placeholder={placeholder}
         error={error}
+        editingMode={editingMode}
       />
       <Popup parentRef={ref} isOpen={isPopupOpen} close={() => setIsPopupOpen(false)}>
         <Options

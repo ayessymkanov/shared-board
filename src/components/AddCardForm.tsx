@@ -14,6 +14,7 @@ type FormValues = {
   team: string;
   assignee: { label: string, value: number }
   date: string;
+  description: string;
 }
 
 type Props = {
@@ -39,9 +40,9 @@ const TEAM_MEMBERS = gql(`
 
 const validationSchema = object().shape({
   title: string()
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
     .required('Title is required'),
+  description: string()
+    .max(200, 'Please keep description under 200 chars'),
   assignee: object()
     .required('Assignee is required'),
   team: string(),
@@ -56,7 +57,6 @@ const AddCardForm: FC<Props> = ({ close, initialValues }) => {
       teamId: Number(initialValues?.team ?? 0)
     }
   });
-  console.log({ team, initialValues });
   const [formError, setFormError] = useState("");
 
   const handleSubmit = async (values: FormValues) => {
@@ -68,6 +68,7 @@ const AddCardForm: FC<Props> = ({ close, initialValues }) => {
             assigneeId: Number(values.assignee.value),
             teamId: Number(values.team),
             dueDateTime: new Date(values.date).toISOString(),
+            description: values.description,
           }
         }
       });
@@ -92,6 +93,7 @@ const AddCardForm: FC<Props> = ({ close, initialValues }) => {
         assignee: initialValues?.assignee ?? { label: '', value: 0 },
         date: initialValues?.date ?? '',
         team: initialValues?.team ?? '',
+        description: '',
       }}
       onSubmit={handleSubmit}
     >
@@ -105,8 +107,21 @@ const AddCardForm: FC<Props> = ({ close, initialValues }) => {
                 label="Title"
                 name="title"
                 type="text"
-                placeholder="Save Captain America"
+                placeholder="Add card title"
                 error={touched.title ? errors.title : ""}
+              />
+            )}
+          </Field>
+          <Field name="description">
+            {({ field }: FieldProps) => (
+              <Input
+                value={field.value as string}
+                onChange={field.onChange}
+                label="Description"
+                name="description"
+                type="textarea"
+                placeholder="Add card description"
+                error={touched.description ? errors.description : ""}
               />
             )}
           </Field>
@@ -119,7 +134,7 @@ const AddCardForm: FC<Props> = ({ close, initialValues }) => {
                 label="Assignee"
                 name="assignee"
                 type="text"
-                placeholder="ironman@avengers.com"
+                placeholder="email@example.com"
                 // error={touched.assignee ? errors.assignee : ""}
                 options={team?.teamMembers.map((member) => ({ label: `${member.name} | ${member.email}`, value: member.id })) ?? []}
               />
@@ -150,7 +165,7 @@ const AddCardForm: FC<Props> = ({ close, initialValues }) => {
                 label="Date"
                 name="date"
                 type="text"
-                placeholder="MM-DD-YYYY"
+                placeholder="MM/DD/YYYY"
                 autoComplete="off"
                 error={touched.date ? errors.date : ""}
               />

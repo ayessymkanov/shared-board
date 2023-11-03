@@ -1,6 +1,7 @@
 import { FC, useContext } from "react";
-import { Card } from "../__generated__/graphql";
+import { Card, Status } from "../__generated__/graphql";
 import { DialogContext } from "./DialogProvider";
+import { getStatusLabel } from "../utils/render";
 
 type Props = {
   card: Partial<Card>;
@@ -27,7 +28,7 @@ const CardComponent: FC<Props> = ({ card, isList }) => {
           <span className="font-normal text-sm">{card.team?.name}</span>
         </div>
         <div>
-          <span className="font-normal text-sm">{card.status}</span>
+          <span className="font-normal text-xs">{getStatusLabel(card.status as Status)}</span>
         </div>
       </div>
     );
@@ -37,7 +38,7 @@ const CardComponent: FC<Props> = ({ card, isList }) => {
       <h5 className="mb-2 text-md font-medium tracking-tight text-gray-900">
         {card.title}
       </h5>
-      <span className="font-normal text-sm">{card.status}</span>
+      <span className="font-normal text-sm">{getStatusLabel(card.status as Status)}</span>
     </div>
   );
 }

@@ -29,13 +29,13 @@ const Dialog = () => {
         return <AddTeamMemberForm close={close} />;
       }
       case 'openCard': {
-        return <CardDetails id={metadata.id} />;
+        return <CardDetails id={metadata.id} close={close} />;
       }
     }
   }
 
-  const className = classNames("absolute top-20 w-11/12 sm:w-96 shadow-backdrop rounded", {
-    "sm:w-2/4": metadata?.name === 'openCard',
+  const className = classNames("absolute sm:top-20 w-11/12 sm:w-96 shadow-backdrop rounded", {
+    "sm:w-3/5 lg:w-1/2 xl:w-1/3": metadata?.name === 'openCard',
   });
 
   return (

@@ -9,7 +9,7 @@ type Props = {
   close: () => void;
 }
 
-const Popup: FC<Props> = ({ children, parentRef, isOpen }) => {
+const Popup: FC<Props> = ({ children, parentRef, isOpen, close }) => {
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, close);
 

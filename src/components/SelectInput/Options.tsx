@@ -21,7 +21,7 @@ const Options: FC<Props> = ({ options, loading, onSelect }) => {
       onSelect(option);
     }
     const className = "flex items-center px-2 py-1 text-sm text-gray-800 rounded hover:bg-gray-100 hover:cursor-pointer group truncate overflow-hidden"
-    return <div className={className} onClick={handleClick}>{option.label}</div>;
+    return <div key={option.value} className={className} onClick={handleClick}>{option.label}</div>;
   }
 
   return (
