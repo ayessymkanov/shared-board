@@ -30,3 +30,24 @@
   transform: rotateZ(-45deg);
   transform-origin: right;
 }
+
+.dialog[open] {
+  animation: show 300ms ease normal;
+}
+@keyframes show{
+  from {
+    opacity: 0;
+  }
+  to {
+  opacity: 1;
+  }
+}
+.dialog.hide {
+  animation: hide 300ms ease normal;
+}
+@keyframes hide{
+  to {
+    opacity: 0;
+  }
+}
+

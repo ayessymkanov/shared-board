@@ -35,8 +35,16 @@ const DialogProvider: FC<Props> = ({ children }) => {
   }
 
   const close = () => {
-    setIsOpen(false);
-    setMetadata({});
+    const dialog = document.querySelector('dialog');
+    if (dialog) {
+      dialog.addEventListener('webkitAnimationEnd', function handler() {
+        dialog.classList.remove('hide');
+        setIsOpen(false);
+        setMetadata({});
+        dialog.removeEventListener('webkitAnimationEnd', handler);
+      });
+      dialog.classList.add('hide');
+    }
   }
 
   return (

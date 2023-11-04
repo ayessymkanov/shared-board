@@ -20,16 +20,16 @@ const weekDays = [
 
 const WeekDays = () => {
   const className = classNames(
-    "w-20 text-xs text-center p-2 rounded mb-1",
-    "sm:w-24 sm:text-sm",
-    "md:w-28 md:text-base"
+    "text-xs text-center p-2 rounded mb-1",
+    "sm:text-sm",
+    "md:text-base"
   );
   const days = weekDays.map((day) => (
     <div key={day} className={className}>{day}</div>
   ));
 
   return (
-    <div className="flex gap-1">{days}</div>
+    <div className="grid grid-cols-7 gap-2">{days}</div>
   );
 }
 

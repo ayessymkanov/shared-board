@@ -6,7 +6,7 @@ type Error = {
 
 type Data = Record<string, any>;
 
-type Path = "signin" | "signup" | "verify" | "forgot" | "reset" | "validateReset";
+type Path = "signin" | "signup" | "verify" | "forgot" | "reset" | "validateReset" | "resend";
 
 const apiUrl = import.meta.env.VITE_AUTH_API_URL;
 
@@ -17,6 +17,7 @@ const url: Record<Path, string> = {
   forgot: `${apiUrl}/forgot`,
   reset: `${apiUrl}/reset`,
   validateReset: `${apiUrl}/validate-reset`,
+  resend: `${apiUrl}/resend`,
 }
 
 export default (path: Path) => {
