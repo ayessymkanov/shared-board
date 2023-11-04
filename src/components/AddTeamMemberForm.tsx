@@ -24,7 +24,7 @@ const validationSchema = object().shape({
 });
 
 const AddTeamMemberForm: FC<Props> = ({ close }) => {
-  const [addTeamMember, { client, error }] = useMutation(ADD_TEAM_MEMBER);
+  const [addTeamMember, { client, error, data }] = useMutation(ADD_TEAM_MEMBER);
   const location = useLocation();
   const teamId = location.pathname.split("/").pop();
 
@@ -41,11 +41,20 @@ const AddTeamMemberForm: FC<Props> = ({ close }) => {
       await client.refetchQueries({
         include: ["Team"]
       });
-      close();
     } catch (err) {
       console.log(err);
     }
   }
+
+  if (data) {
+    return (
+      <div className="flex flex-col gap-4">
+        <span className="text-sm">{data.addTeamMember}</span>
+        <Button type="primary" onClick={close}>Close</Button>
+      </div>
+    );
+  }
+
   return (
     <Formik
       validationSchema={validationSchema}
