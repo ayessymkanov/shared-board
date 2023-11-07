@@ -10,17 +10,12 @@ import { gql } from "../__generated__";
 import { Option } from "./SelectInput/SelectInput";
 import { Status } from "../__generated__/graphql";
 import { getStatusLabel } from "../utils/render";
+import { UPDATE_CARD } from "../gql/mutations";
 
 type Props = {
   id: string;
   close: () => void;
 }
-
-const UPDATE_CARD = gql(`
-  mutation UpdateCard($updateCardId: ID!, $input: UpdateCardInput) {
-    updateCard(id: $updateCardId, input: $input)
-  }
-`);
 
 const CARD = gql(`
   query Card($cardId: String!) {

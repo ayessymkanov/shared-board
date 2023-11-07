@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { DragEventHandler, FC, useContext } from "react";
 import { Card, Status } from "../__generated__/graphql";
 import { DialogContext } from "./DialogProvider";
 import { getStatusLabel } from "../utils/render";
@@ -9,7 +9,7 @@ type Props = {
 }
 
 const listClassName = "w-full flex justify-between px-3 py-2 border border-gray-300 rounded shadow-md bg-white cursor-pointer";
-const cardClassName = "flex flex-col w-full block p-2 bg-white border-gray-300 rounded shadow-md bg-white border cursor-pointer";
+const cardClassName = "flex flex-col w-full block p-2 bg-white border-gray-300 rounded shadow-md bg-white border cursor-pointer hover:border-blue-700";
 
 const CardComponent: FC<Props> = ({ card, isList }) => {
   const { open } = useContext(DialogContext);
@@ -37,9 +37,17 @@ const CardComponent: FC<Props> = ({ card, isList }) => {
     open({ name: "openCard", title: "Card", id: card.id });
   }
 
+  const handleDragStart: DragEventHandler<HTMLDivElement> = (e) => {
+    const data = JSON.stringify({
+      cardId: card.id,
+      userId: card.assignee?.id,
+    });
+    e.dataTransfer.setData('text/plain', data);
+  }
+
   if (isList) {
     return (
-      <div onClick={handleClick} className={listClassName}>
+      <div style={{ userSelect: 'none' }} onClick={handleClick} className={listClassName} draggable onDragStart={handleDragStart}>
         <div className="flex flex-col">
           <h5 className="text-md font-medium tracking-tight text-gray-900">
             {card.title}
@@ -56,7 +64,15 @@ const CardComponent: FC<Props> = ({ card, isList }) => {
     );
   }
   return (
-    <div onClick={handleClick} className={cardClassName}>
+    <div
+      style={{ userSelect: 'none' }}
+      onClick={handleClick}
+      draggable={true}
+      onDragStart={handleDragStart}
+      onDragEnter={(e) => e.stopPropagation()}
+      onDragLeave={(e) => e.stopPropagation()}
+      className={cardClassName}
+    >
       <h5 className="mb-2 text-md font-medium tracking-tight text-gray-900">
         {card.title}
       </h5>

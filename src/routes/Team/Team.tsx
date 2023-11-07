@@ -24,6 +24,7 @@ const Team = () => {
         {Object.keys(teamData.columns).map((m) => (
           <TeamMemberColumn
             key={teamData.columns[m].id}
+            userId={teamData.columns[m].id}
             cards={teamData.columns[m].cards}
             title={teamData.columns[m].name}
           />
