@@ -16,7 +16,7 @@ const Team = () => {
     return <div>Loading...</div>;
   }
 
-  const className = classnames(`grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4`);
+  const className = classnames(`grid grid-cols-1 items-start sm:grid-cols-3 lg:grid-cols-4 gap-4`);
 
   return (
     <PageWrapper loading={loading}>

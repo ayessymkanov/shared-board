@@ -9,7 +9,7 @@ type Props = {
 }
 
 const listClassName = "w-full flex justify-between px-3 py-2 border border-gray-300 rounded shadow-md bg-white cursor-pointer";
-const cardClassName = "flex flex-col w-full block p-2 bg-white border-gray-300 rounded shadow-md bg-white border cursor-pointer hover:border-blue-700";
+const cardClassName = "card flex flex-col w-full block p-2 bg-white border-gray-300 rounded shadow-md bg-white border cursor-pointer hover:border-blue-700";
 
 const CardComponent: FC<Props> = ({ card, isList }) => {
   const { open } = useContext(DialogContext);
@@ -43,6 +43,21 @@ const CardComponent: FC<Props> = ({ card, isList }) => {
       userId: card.assignee?.id,
     });
     e.dataTransfer.setData('text/plain', data);
+    const allCards = document.querySelectorAll('.card');
+    [...allCards].forEach((cardEl) => {
+      if (cardEl.id !== card.id) {
+        // @ts-ignore
+        cardEl.style['pointer-events'] = 'none';
+      }
+    });
+  }
+
+  const handleDragEnd = () => {
+    const allCards = document.querySelectorAll('.card');
+    [...allCards].forEach((cardEl) => {
+      // @ts-ignore
+      cardEl.style['pointer-events'] = 'auto';
+    });
   }
 
   if (isList) {
@@ -69,9 +84,11 @@ const CardComponent: FC<Props> = ({ card, isList }) => {
       onClick={handleClick}
       draggable={true}
       onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
       onDragEnter={(e) => e.stopPropagation()}
       onDragLeave={(e) => e.stopPropagation()}
       className={cardClassName}
+      id={card.id}
     >
       <h5 className="mb-2 text-md font-medium tracking-tight text-gray-900">
         {card.title}

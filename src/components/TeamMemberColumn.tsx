@@ -1,4 +1,4 @@
-import { DragEventHandler, FC } from "react";
+import { DragEventHandler, FC, useState } from "react";
 import Card from "./Card";
 import { Card as CardType } from "../__generated__/graphql";
 import { UPDATE_CARD } from "../gql/mutations";
@@ -11,6 +11,7 @@ type Props = {
 };
 
 const TeamMemberColumn: FC<Props> = ({ cards, title, userId }) => {
+  const [draggedOver, setDraggedOver] = useState(false);
   const [updateCard, { client }] = useMutation(UPDATE_CARD);
 
   const renderCards = () => {
@@ -23,6 +24,7 @@ const TeamMemberColumn: FC<Props> = ({ cards, title, userId }) => {
 
   const handleDrop: DragEventHandler<HTMLDivElement> = async (e) => {
     e.preventDefault();
+    setDraggedOver(false);
     try {
       const data = JSON.parse(e.dataTransfer.getData("text/plain"));
       if (data.cardId) {
@@ -43,19 +45,33 @@ const TeamMemberColumn: FC<Props> = ({ cards, title, userId }) => {
     }
   }
 
+  const handleDragEnter: DragEventHandler<HTMLDivElement> = () => {
+    setDraggedOver(true);
+  }
+
+  const handleDragLeave: DragEventHandler<HTMLDivElement> = () => {
+    setDraggedOver(false);
+  }
+
   const dragOver: DragEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
   }
-
 
   return (
     <section
       className="relative flex min-h-0 flex-col gap-2 p-2 border rounded bg-gray-200"
       onDragOver={dragOver}
       onDrop={handleDrop}
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
     >
       <h3 className="text-md">{title}</h3>
       {renderCards()}
+      {draggedOver && (
+        <div className="flex justify-center items-center h-20 bg-gray-300 pointer-events-none rounded">
+          <span className="text-sm font-gray-500">Assign to {title}</span>
+        </div>
+      )}
     </section>
   );
 };
