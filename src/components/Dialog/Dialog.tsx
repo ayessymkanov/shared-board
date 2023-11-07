@@ -35,7 +35,7 @@ const Dialog = () => {
   }
 
   const className = classNames("dialog absolute sm:top-20 w-11/12 sm:w-96 shadow-backdrop rounded", {
-    "sm:w-3/5 lg:w-1/2 xl:w-1/3": metadata?.name === 'openCard',
+    "sm:w-3/4 lg:w-3/5 xl:w-1/2": metadata?.name === 'openCard',
   });
 
   return (
